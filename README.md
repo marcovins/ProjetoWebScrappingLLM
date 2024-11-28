@@ -1,8 +1,11 @@
+
 # Web Scraper Visual
 
 Este é um projeto de **Web Scraper Visual** que utiliza o modelo **SmartScraperGraph** para realizar scraping de páginas web e exibir os resultados de maneira estruturada em uma interface gráfica desenvolvida com **Tkinter**.
 
 A aplicação permite que o usuário insira uma URL e visualize o conteúdo extraído da página web diretamente na interface. O scraper usa um modelo de **LLM (Large Language Model)** para gerar respostas e metadados associados ao conteúdo extraído da página.
+
+**Nota**: Este código necessita de um **modelo LLM** configurado e disponível localmente. No meu caso, estou utilizando uma LLM local, e a configuração está definida por meio de variáveis de ambiente para garantir que o código consiga acessá-la corretamente.
 
 ## Funcionalidades
 
@@ -10,7 +13,7 @@ A aplicação permite que o usuário insira uma URL e visualize o conteúdo extr
 - **Interface Gráfica**: Desenvolvida com **Tkinter**, a interface permite que o usuário insira URLs e visualize os resultados de scraping de maneira limpa e organizada.
 - **Validação de Dados**: Utiliza o **Pydantic** para validar a saída do scraper, garantindo que os dados extraídos estejam estruturados corretamente.
 - **Exibição de Metadados**: Além do conteúdo extraído, os metadados como a confiança do modelo e tempo de processamento são exibidos.
-  
+
 ## Pré-requisitos
 
 - **Python 3.6+**: Certifique-se de que o Python está instalado em seu ambiente.
@@ -25,6 +28,8 @@ Você pode instalar as dependências utilizando o `pip`:
 ```bash
 pip install requests pydantic scrapegraphai
 ```
+
+**Nota**: Para utilizar a aplicação, é necessário configurar uma LLM local. No código, a variável de ambiente `LLM_BASE_URL` é utilizada para apontar para o endpoint da LLM que você deseja usar.
 
 ## Como Usar
 
@@ -71,6 +76,7 @@ import requests
 from pydantic import BaseModel, Field
 import tkinter as tk
 from tkinter import messagebox, scrolledtext
+import os
 
 # Definição do modelo de validação para a saída do scraper
 class ResponseSchema(BaseModel):
@@ -89,7 +95,8 @@ def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
             response = requests.head(source, timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
-            messagebox.showerror("Erro de Conexão", f"Erro ao verificar a conexão de rede:\n{e}")
+            messagebox.showerror("Erro de Conexão", f"Erro ao verificar a conexão de rede:
+{e}")
             return
 
         # Configuração do scraper com prompt e esquema
@@ -108,7 +115,8 @@ def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
         output_widget.insert(tk.END, result.json(indent=4))
 
     except Exception as e:
-        messagebox.showerror("Erro no Scraper", f"Erro ao executar o scraper:\n{type(e).__name__} - {str(e)}")
+        messagebox.showerror("Erro no Scraper", f"Erro ao executar o scraper:
+{type(e).__name__} - {str(e)}")
 
 # Configuração da interface gráfica
 def start_gui():
@@ -149,6 +157,7 @@ def start_gui():
 if __name__ == "__main__":
     start_gui()
 ```
+
 ## Contribuindo
 
 Se você deseja contribuir para este projeto, siga os passos abaixo:
