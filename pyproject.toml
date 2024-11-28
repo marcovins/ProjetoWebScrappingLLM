@@ -4,9 +4,12 @@ version = "0.1.0"
 description = "Projeto de WebScrapping utilizando modelo de LLM local"
 authors = ["marcovins <marcosbelods@gmail.com>"]
 readme = "README.md"
+package-mode = false
+
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.8"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
