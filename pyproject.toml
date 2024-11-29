@@ -4,14 +4,12 @@ version = "0.1.0"
 description = "Projeto de WebScrapping utilizando modelo de LLM local"
 authors = ["marcovins <marcosbelods@gmail.com>"]
 readme = "README.md"
-package-mode = false
-
+packages = [{ include = "src" }]
 
 [tool.poetry.dependencies]
 python = ">=3.8"
 python-dotenv = "^1.0.1"
 selenium = "^4.27.1"
-
 
 [build-system]
 requires = ["poetry-core"]
