@@ -10,6 +10,7 @@ packages = [{ include = "src" }]
 python = ">=3.8"
 python-dotenv = "^1.0.1"
 selenium = "^4.27.1"
+asyncio = "^3.4.3"
 
 [build-system]
 requires = ["poetry-core"]
