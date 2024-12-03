@@ -4,6 +4,7 @@ import requests
 import tkinter as tk
 from tkinter import messagebox, scrolledtext
 from src.Schemas.ResponseSchema import ResponseSchema
+from src.Scrapping.DinamicScrapper import HandlerDinamic
 from dotenv import load_dotenv
 import os
 
@@ -75,8 +76,9 @@ def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
             return
 
         # Configuração do scraper com prompt e esquema
-        smart_scraper_graph = SmartScraperGraph(
-            prompt="Analise os dados de um relatório Power BI ou forneça uma descrição detalhada do conteúdo da página.",
+        prompt = "Me retorne um scrapping da seguinte página web"
+        smart_scraper_graph = SmartScraperGraph (
+            prompt=prompt,
             source=source,
             config=GRAPH_CONFIG,
             schema=ResponseSchema,
@@ -84,16 +86,22 @@ def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
 
         # Executando o scraper
         result = smart_scraper_graph.run()
-        print(result)
-        # Verifique se result é um dicionário e exiba o conteúdo
-        if isinstance(result, dict):
+
+        try:
+            # Verifique se result é um dicionário e exiba o conteúdo
+            if (result['tag'] != '' and result['tag'] != 'NA'):
+                print(f'Result tag = {result['tag']}')
+                output_widget.delete(1.0, tk.END)  # Limpar o conteúdo anterior
+                output_widget.insert(tk.END, json.dumps(result, indent=4))  # Formatar e exibir
+            else:
+                print(f'Entrando no else')
+                output_widget.delete(1.0, tk.END)  # Limpar o conteúdo anterior
+                output_widget.insert(tk.END, HandlerDinamic(url=source, prompt=prompt))  # Formatar e exibir
+        except:
+            nova_consulta = HandlerDinamic(url=source, prompt=prompt)
+            print(f'Entrando no except com url={source} e prompt={prompt}')
             output_widget.delete(1.0, tk.END)  # Limpar o conteúdo anterior
-            output_widget.insert(tk.END, json.dumps(result, indent=4))  # Formatar e exibir
-        else:
-            messagebox.showerror("Erro no Resultado", "O resultado do scraper não está no formato esperado.")
+            output_widget.insert(tk.END, HandlerDinamic(url=source, prompt=prompt))  # Formatar e exibir
 
     except Exception as e:
         messagebox.showerror("Erro no Scraper", f"Erro ao executar o scraper:\n{type(e).__name__} - {str(e)}")
-
-
-
