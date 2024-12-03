@@ -1,4 +1,4 @@
-import json  # Import necessário para manipular JSON
+import json
 from scrapegraphai.graphs import SmartScraperGraph
 import requests
 import tkinter as tk
@@ -31,26 +31,20 @@ GRAPH_CONFIG = {
 
 # Configuração da interface gráfica
 def start_gui():
-    # Inicialização da janela principal
     root = tk.Tk()
     root.title("Web Scraper Visual")
     root.geometry("600x400")
 
-    # Label e campo de entrada para URL
-    url_label = tk.Label(root, text="Insira a URL:")
-    url_label.pack(pady=5)
-
+    # Configuração de entrada e saída
+    tk.Label(root, text="Insira a URL:").pack(pady=5)
     url_entry = tk.Entry(root, width=80)
     url_entry.pack(pady=5)
 
-    # Texto para saída
-    output_label = tk.Label(root, text="Resultado:")
-    output_label.pack(pady=5)
-
+    tk.Label(root, text="Resultado:").pack(pady=5)
     output_text = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=70, height=15)
     output_text.pack(pady=5)
 
-    # Botão para executar o scraper
+    # Função para executar o scraper
     def execute_scraper():
         source = url_entry.get().strip()
         if not source:
@@ -58,13 +52,10 @@ def start_gui():
         else:
             run_scraper(source, output_text)
 
-    scrape_button = tk.Button(root, text="Executar Scraper", command=execute_scraper)
-    scrape_button.pack(pady=10)
-
-    # Iniciar loop da interface gráfica
+    tk.Button(root, text="Executar Scraper", command=execute_scraper).pack(pady=10)
     root.mainloop()
 
-# Função para executar o scraper
+# Função principal para scraping
 def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
     try:
         # Verificando a conexão de rede
@@ -75,9 +66,8 @@ def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
             messagebox.showerror("Erro de Conexão", f"Erro ao verificar a conexão de rede:\n{e}")
             return
 
-        # Configuração do scraper com prompt e esquema
-        prompt = "Me retorne um scrapping da seguinte página web"
-        smart_scraper_graph = SmartScraperGraph (
+        prompt = "Me retorne uma raspagem de informações da seguinte página web"
+        smart_scraper_graph = SmartScraperGraph(
             prompt=prompt,
             source=source,
             config=GRAPH_CONFIG,
@@ -86,22 +76,25 @@ def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
 
         # Executando o scraper
         result = smart_scraper_graph.run()
-
-        try:
-            # Verifique se result é um dicionário e exiba o conteúdo
-            if (result['tag'] != '' and result['tag'] != 'NA'):
-                print(f'Result tag = {result['tag']}')
-                output_widget.delete(1.0, tk.END)  # Limpar o conteúdo anterior
-                output_widget.insert(tk.END, json.dumps(result, indent=4))  # Formatar e exibir
-            else:
-                print(f'Entrando no else')
-                output_widget.delete(1.0, tk.END)  # Limpar o conteúdo anterior
-                output_widget.insert(tk.END, HandlerDinamic(url=source, prompt=prompt))  # Formatar e exibir
-        except:
-            nova_consulta = HandlerDinamic(url=source, prompt=prompt)
-            print(f'Entrando no except com url={source} e prompt={prompt}')
-            output_widget.delete(1.0, tk.END)  # Limpar o conteúdo anterior
-            output_widget.insert(tk.END, HandlerDinamic(url=source, prompt=prompt))  # Formatar e exibir
+        if isinstance(result, dict) and result.get('tag') and result['tag'] != 'NA':
+            print(f"Resultado obtido do SmartScraperGraph: {result['tag']}")
+            output_widget.delete(1.0, tk.END)
+            output_widget.insert(tk.END, json.dumps(result, indent=4))
+        else:
+            print("Resultado vazio ou inadequado. Usando HandlerDinamic.")
+            handle_dynamic(source, prompt, output_widget)
 
     except Exception as e:
+        print(f"Erro ao executar o scraper principal: {type(e).__name__} - {str(e)}")
         messagebox.showerror("Erro no Scraper", f"Erro ao executar o scraper:\n{type(e).__name__} - {str(e)}")
+
+# Função de fallback para scraping dinâmico
+def handle_dynamic(source: str, prompt: str, output_widget: scrolledtext.ScrolledText):
+    try:
+        print(f"Chamando HandlerDinamic com URL={source} e prompt={prompt}")
+        result = HandlerDinamic(url=source, prompt=prompt)
+        output_widget.delete(1.0, tk.END)
+        output_widget.insert(tk.END, result)
+    except Exception as e:
+        print(f"Erro ao executar o HandlerDinamic: {type(e).__name__} - {str(e)}")
+        messagebox.showerror("Erro no Scraper Dinâmico", f"Erro ao executar o scraper dinâmico:\n{type(e).__name__} - {str(e)}")
