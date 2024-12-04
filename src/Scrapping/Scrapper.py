@@ -1,4 +1,5 @@
 import json
+import re
 from scrapegraphai.graphs import SmartScraperGraph
 import requests
 import tkinter as tk
@@ -79,8 +80,10 @@ def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
         result = smart_scraper_graph.run()
         if isinstance(result, dict) and len(result.keys()) > 4:
             print(f"Resultado obtido do SmartScraperGraph: {result}")
+            # Decodificando caracteres Unicode
+            decoded_result = decode_unicode(json.dumps(result, indent=4))
             output_widget.delete(1.0, tk.END)
-            output_widget.insert(tk.END, json.dumps(result, indent=4))
+            output_widget.insert(tk.END, decoded_result)
         else:
             print(result.keys())
             print("Resultado vazio ou inadequado. Usando HandlerDinamic.")
@@ -95,8 +98,16 @@ def handle_dynamic(source: str, prompt: str, output_widget: scrolledtext.Scrolle
     try:
         print(f"Chamando HandlerDinamic com URL={source} e prompt={prompt}")
         result = HandlerDinamic(url=source, prompt=prompt)
+        # Decodificando caracteres Unicode
+        decoded_result = decode_unicode(result)
         output_widget.delete(1.0, tk.END)
-        output_widget.insert(tk.END, result)
+        output_widget.insert(tk.END, decoded_result)
     except Exception as e:
         print(f"Erro ao executar o HandlerDinamic: {type(e).__name__} - {str(e)}")
         messagebox.showerror("Erro no Scraper Dinâmico", f"Erro ao executar o scraper dinâmico:\n{type(e).__name__} - {str(e)}")
+
+# Função para decodificar os caracteres Unicode
+def decode_unicode(text):
+    # Utiliza a decodificação com 'unicode_escape'
+    decoded_text = bytes(text, 'utf-8').decode('unicode_escape')
+    return decoded_text
