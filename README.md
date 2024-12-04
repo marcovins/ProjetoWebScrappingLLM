@@ -1,5 +1,5 @@
 
-# Projeto de WebScrapping com LLM's
+# Projeto de WebScraping com LLM's 🌐🤖
 
 O seguinte projeto é uma aplicação para extração e exibição de informações de páginas web, utilizando o modelo **SmartScraperGraph** e uma interface gráfica desenvolvida com **Tkinter**. A aplicação combina scraping dinâmico com modelos LLM (Large Language Model) para gerar respostas estruturadas e metadados de páginas web.
 
@@ -7,29 +7,29 @@ O seguinte projeto é uma aplicação para extração e exibição de informaç�
 
 ---
 
-## Funcionalidades
+## Funcionalidades 🛠️
 
-- **Scraping Dinâmico e Estático:**
+- **Scraping Dinâmico e Estático:** 🌍
   - Lida com páginas dinâmicas e estáticas, usando Selenium quando necessário.
-- **Interface Gráfica Intuitiva:**
+- **Interface Gráfica Intuitiva:** 🖥️
   - Desenvolvida com **Tkinter**, facilita a interação para inserir URLs e exibir resultados.
-- **Fallback Dinâmico:**
+- **Fallback Dinâmico:** 🔄
   - Usa `HandlerDinamic` para páginas com conteúdo carregado dinamicamente.
-- **Validação Estruturada:**
+- **Validação Estruturada:** ✅
   - Implementa **Pydantic** para validar e organizar os dados extraídos.
-- **Resultados Detalhados:**
+- **Resultados Detalhados:** 📊
   - Exibe dados extraídos, como descrições, tags, confiança do modelo e tempo de processamento.
 
 ---
 
-## Requisitos
+## Requisitos ⚙️
 
-### Dependências de Sistema
+### Dependências de Sistema 💻
 
 - **Python 3.6+** 
 - **Google Chrome** e **ChromeDriver** (para scraping dinâmico com Selenium).
 
-### Dependências de Python
+### Dependências de Python 📦
 
 - `requests`
 - `pydantic`
@@ -49,29 +49,29 @@ pip install -r requirements.txt
 
 ---
 
-## Como Usar
+## Como Usar 📝
 
-1. **Configurar as variáveis de ambiente**:
+1. **Configurar as variáveis de ambiente:** ⚙️
    - Crie um arquivo `.env` e configure:
      ```env
      MODEL_URL=http://localhost:5000
      PROMPT="Extraia informações estruturadas desta página"
      ```
-   
-2. **Iniciar a aplicação**:
+
+2. **Iniciar a aplicação:** 🚀
    - Execute o script principal:
      ```bash
      python src/main.py
      ```
 
-3. **Interagir com a interface**:
+3. **Interagir com a interface:** 🎮
    - Insira a URL no campo de texto.
    - Clique em "Executar Scraper".
    - Visualize os resultados detalhados na área de saída.
 
 ---
 
-## Exemplo de Saída
+## Exemplo de Saída 💡
 
 Um exemplo de resposta estruturada:
 
@@ -91,7 +91,7 @@ Um exemplo de resposta estruturada:
 
 ---
 
-## Estrutura do Projeto
+## Estrutura do Projeto 🗂️
 
 ```plaintext
 rsc/
@@ -113,7 +113,7 @@ test/
 
 ---
 
-## Contribuindo
+## Contribuindo 🤝
 
 Contribuições são bem-vindas! Siga os passos abaixo:
 
@@ -125,6 +125,6 @@ Contribuições são bem-vindas! Siga os passos abaixo:
 
 ---
 
-## Contato
+## Contato 📬
 
 Se você tiver dúvidas, sugestões ou encontrar problemas, abra uma **issue** ou envie um **pull request**.
