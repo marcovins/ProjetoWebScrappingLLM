@@ -26,7 +26,7 @@ GRAPH_CONFIG = {
         "model": "nomic-embed-text",
         "base_url": MODEL_URL,
     },
-    "headless": False,
+    "headless": True,
     "verbose": False,
 }
 

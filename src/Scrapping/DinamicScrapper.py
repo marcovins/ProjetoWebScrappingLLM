@@ -18,7 +18,7 @@ MODEL_URL = os.getenv("MODEL_URL_REQUEST")
 # Configuração do Selenium
 def setup_driver():
     chrome_options = Options()
-    #chrome_options.add_argument("--headless")  # Executar em modo headless
+    chrome_options.add_argument("--headless")  # Executar em modo headless
     chrome_options.add_argument("--disable-gpu")  # Melhor compatibilidade
     chrome_options.add_argument("--no-sandbox")  # Necessário em alguns ambientes
     chrome_options.add_argument("--disable-dev-shm-usage")  # Evitar problemas em contêineres
