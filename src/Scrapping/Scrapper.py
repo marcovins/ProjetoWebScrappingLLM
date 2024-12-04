@@ -13,6 +13,7 @@ load_dotenv()
 
 # Configuração do modelo LLM
 MODEL_URL = os.getenv("MODEL_URL")
+PROMPT = os.getenv("PROMPT")
 
 GRAPH_CONFIG = {
     "llm": {
@@ -66,7 +67,7 @@ def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
             messagebox.showerror("Erro de Conexão", f"Erro ao verificar a conexão de rede:\n{e}")
             return
 
-        prompt = "Me retorne uma raspagem de informações da seguinte página web"
+        prompt = PROMPT
         smart_scraper_graph = SmartScraperGraph(
             prompt=prompt,
             source=source,
@@ -76,11 +77,12 @@ def run_scraper(source: str, output_widget: scrolledtext.ScrolledText):
 
         # Executando o scraper
         result = smart_scraper_graph.run()
-        if isinstance(result, dict) and result.get('tag') and result['tag'] != 'NA':
-            print(f"Resultado obtido do SmartScraperGraph: {result['tag']}")
+        if isinstance(result, dict) and len(result.keys()) > 4:
+            print(f"Resultado obtido do SmartScraperGraph: {result}")
             output_widget.delete(1.0, tk.END)
             output_widget.insert(tk.END, json.dumps(result, indent=4))
         else:
+            print(result.keys())
             print("Resultado vazio ou inadequado. Usando HandlerDinamic.")
             handle_dynamic(source, prompt, output_widget)
 
