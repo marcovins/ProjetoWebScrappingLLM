@@ -126,7 +126,3 @@ def decode_unicode(text):
     # Utiliza a decodificação com 'unicode_escape'
     decoded_text = bytes(text, 'utf-8').decode('unicode_escape')
     return decoded_text
-
-start_gui()
-time.sleep(2)
-exit(0)
