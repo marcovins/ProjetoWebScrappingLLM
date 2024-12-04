@@ -34,7 +34,7 @@ def getSource(url: str) -> str:
         
         WebDriverWait(driver, 30).until(
         lambda d: d.execute_script("return document.readyState") == "complete")
-        
+
         # Obter o HTML completo da página renderizada
         html = driver.page_source
         return html
@@ -79,9 +79,16 @@ def parseHTML(html: str) -> dict:
 
 # Enviar requisição para o modelo de LLM
 def getResponse(prompt: str, data: dict):
+
+    schema = {
+        'descricao': "O texto gerado pela LLM",
+        'tag': "Categoria do site (Saúde, Educação, Trabalho, Agropecuária, Minério, etc.)",
+        'metadados': "Metadados adicionais retornados pelo modelo",
+    }
+
     requisicao = {
         "model": "llama3.2",
-        "prompt": f"{prompt}:\n{data}",
+        "prompt": f"{prompt}:\nRetorne conforme este schema: {schema}\nDados do site:\n{data} ",
         "stream": False
     }
 
@@ -99,5 +106,6 @@ def HandlerDinamic(url: str, prompt: str):
             print("\nDATA:\n",data)
             # Responder ao prompt usando o modelo LLM
             response = getResponse(prompt, data)
+            
             return response
     return "Não foi possível carregar a página."
