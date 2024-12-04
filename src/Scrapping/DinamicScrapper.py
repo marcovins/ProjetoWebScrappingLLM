@@ -33,15 +33,18 @@ def getSource(url: str) -> str:
         driver.get(url)
         
         WebDriverWait(driver, 30).until(
-        lambda d: d.execute_script("return document.readyState") == "complete"
-        )
+        lambda d: d.execute_script("return document.readyState") == "complete")
+        
         # Obter o HTML completo da página renderizada
         html = driver.page_source
-        driver.quit()
         return html
+    
     except Exception as e:
         print(f"Erro ao carregar a página: {e}")
         return None
+    
+    finally:
+        driver.quit()
 
 # Parsear o HTML usando BeautifulSoup
 def parseHTML(html: str) -> dict:
