@@ -8,7 +8,10 @@ dynamic_sites = [
     "https://www.google.com/maps",
     "https://www.netflix.com",
     "https://www.amazon.com/s?k=books",
-    "https://app.powerbi.com"
+    "https://app.powerbi.com",
+    "https://www.cnnbrasil.com.br/economia/macroeconomia/industria-deve-ser-grande-destaque-do-pib-no-3o-trimestre-dizem-economistas/",
+    "https://www.fiepb.com.br/",
+    "https://medium.com/wise-well/the-surprising-unhealthy-filth-of-shopping-carts-a8a714a2c100",
 ]
 
 static_sites = [
@@ -55,4 +58,7 @@ def test_parse_html():
     data = parseHTML(html)
     assert data['title'] == "Test Page", "O título da página não foi extraído corretamente"
     assert data['meta_description'] == "This is a test page.", "A meta descrição não foi extraída corretamente"
+    assert "<html" in html.lower(), f"O HTML retornado por não contém a tag <html>"
+    assert "</html>" in html.lower(), f"O HTML retornado não contém a tag </html>"
+    assert html is not None, f"getSource não retornou nenhum HTML"
     #assert "https://link1.com" in data['links'], "Os links não foram extraídos corretamente"

@@ -91,10 +91,9 @@ def getResponse(prompt: str, data: dict):
         "prompt": f"{prompt}:\nRetorne conforme este schema: {schema}\nDados do site:\n{data} ",
         "stream": False
     }
-
-    response = requests.post(MODEL_URL, json=requisicao)
+    print(MODEL_URL)
+    response = requests.post(url=MODEL_URL, json=requisicao)
     response.raise_for_status()
-    
     return response.json().get('response', "Erro na resposta do modelo")
 
 # Função principal para lidar com páginas dinâmicas
@@ -106,6 +105,5 @@ def HandlerDinamic(url: str, prompt: str):
             print("\nDATA:\n",data)
             # Responder ao prompt usando o modelo LLM
             response = getResponse(prompt, data)
-            
             return response
     return "Não foi possível carregar a página."
