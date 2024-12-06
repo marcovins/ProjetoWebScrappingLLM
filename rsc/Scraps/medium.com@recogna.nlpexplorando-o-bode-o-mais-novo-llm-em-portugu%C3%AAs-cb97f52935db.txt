@@ -1,0 +1,992 @@
+[
+    {
+        "index": 0,
+        "tags": [],
+        "content": "# **Explorando o Bode: O mais novo LLM em Português**"
+    },
+    {
+        "index": 1,
+        "tags": [],
+        "content": "[![Recogna NLP](https://miro.medium.com/v2/da:true/resize:fill:44:44/0*EUXEyHSxqzu-QJjP)](/@recogna.nlp?source=post_page---byline--cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 2,
+        "tags": [],
+        "content": "[Recogna NLP](/@recogna.nlp?source=post_page---byline--cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 3,
+        "tags": [],
+        "content": "·"
+    },
+    {
+        "index": 4,
+        "tags": [],
+        "content": "[Follow](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fsubscribe%2Fuser%2F44da42865b40&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fexplorando-o-bode-o-mais-novo-llm-em-portugu%C3%AAs-cb97f52935db&user=Recogna+NLP&userId=44da42865b40&source=post_page-44da42865b40--byline--cb97f52935db---------------------post_header-----------)"
+    },
+    {
+        "index": 5,
+        "tags": [],
+        "content": "8 min read"
+    },
+    {
+        "index": 6,
+        "tags": [],
+        "content": "·"
+    },
+    {
+        "index": 7,
+        "tags": [],
+        "content": "Jan 30, 2024"
+    },
+    {
+        "index": 8,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fvote%2Fp%2Fcb97f52935db&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fexplorando-o-bode-o-mais-novo-llm-em-portugu%25C3%25AAs-cb97f52935db&user=Recogna+NLP&userId=44da42865b40&source=---header_actions--cb97f52935db---------------------clap_footer-----------)"
+    },
+    {
+        "index": 9,
+        "tags": [],
+        "content": "20"
+    },
+    {
+        "index": 10,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fcb97f52935db&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fexplorando-o-bode-o-mais-novo-llm-em-portugu%25C3%25AAs-cb97f52935db&source=---header_actions--cb97f52935db---------------------bookmark_footer-----------)"
+    },
+    {
+        "index": 11,
+        "tags": [],
+        "content": "Share"
+    },
+    {
+        "index": 12,
+        "tags": [],
+        "content": "![](https://miro.medium.com/v2/resize:fit:323/1*eTPim0DJ6Fp7fQ-PK7qkNQ.png)"
+    },
+    {
+        "index": 13,
+        "tags": [],
+        "content": "S e você já se aventurou pelo vasto universo da inteligência artificial e do processamento de linguagem natural, provavelmente já se deparou com a escassez de modelos robustos e eficazes em língua portuguesa. No entanto, há uma nova esperança no horizonte linguístico: o Bode."
+    },
+    {
+        "index": 14,
+        "tags": [],
+        "content": "Neste artigo, apresentaremos uma análise detalhada da arquitetura do Bode, acompanhada de uma ilustração prática de sua aplicação em uma tarefa específica: a análise de sentimentos. Para mais informações, convidamos o leitor a visitar a página do na qual está publicado o modelo proposto."
+    },
+    {
+        "index": 15,
+        "tags": [],
+        "content": "# Introdução"
+    },
+    {
+        "index": 16,
+        "tags": [],
+        "content": "Bode é um modelo de linguagem, do inglês Large Language Model (LLM), projetado especificamente para o português. Seu nascimento ocorreu a partir do fine-tuning do modelo LLaMa 2, utilizando o dataset Alpaca traduzido para o português pelos autores do Cabrita, o Bode foi concebido para suprir as lacunas deixadas por modelos clássicos, como o próprio LLaMa, que, apesar de responderem a prompts em português, muitas vezes cometem erros gramaticais e podem até gerar respostas em inglês."
+    },
+    {
+        "index": 17,
+        "tags": [],
+        "content": "**Contexto do Desenvolvimento**"
+    },
+    {
+        "index": 18,
+        "tags": [],
+        "content": "A iniciativa de criar o Bode surgiu da necessidade de preencher o vácuo de modelos de linguagem para o idioma português. Enquanto algumas opções estão disponíveis, a maioria delas carece do tamanho e da especificidade necessários para tarefas complexas de processamento de linguagem natural. O Bode, com seus impressionantes 13 bilhões de parâmetros, oferece uma solução mais robusta e especializada."
+    },
+    {
+        "index": 19,
+        "tags": [],
+        "content": "# Detalhes do Modelo"
+    },
+    {
+        "index": 20,
+        "tags": [],
+        "content": "![](https://miro.medium.com/v2/resize:fit:700/0*47lC9aIBGZuHzbDU)"
+    },
+    {
+        "index": 21,
+        "tags": [],
+        "content": "Fonte: "
+    },
+    {
+        "index": 22,
+        "tags": [],
+        "content": "# Modelo Base: LLaMa 2"
+    },
+    {
+        "index": 23,
+        "tags": [],
+        "content": "O Bode herda sua base do LLaMa 2, um modelo já estabelecido no cenário de processamento de linguagem natural."
+    },
+    {
+        "index": 24,
+        "tags": [],
+        "content": "**Dataset de Treinamento: Alpaca**"
+    },
+    {
+        "index": 25,
+        "tags": [],
+        "content": "O treinamento do Bode foi realizado através do fine-tuning no dataset Alpaca traduzido para o português. Esse conjunto de dados, focado em instruções, proporcionou ao modelo uma compreensão profunda da língua portuguesa."
+    },
+    {
+        "index": 26,
+        "tags": [],
+        "content": "# Idioma: Português"
+    },
+    {
+        "index": 27,
+        "tags": [],
+        "content": "Ao contrário de modelos mais generalistas, em relação ao idioma, o Bode foi concebido exclusivamente para o português, resultando em respostas mais precisas."
+    },
+    {
+        "index": 28,
+        "tags": [],
+        "content": "# Treinamento e Dados"
+    },
+    {
+        "index": 29,
+        "tags": [],
+        "content": "O processo de treinamento do Bode envolveu o fine-tuning a partir do LLaMa 2, utilizando o dataset Alpaca. Essa abordagem, aliada ao poder computacional do Supercomputador Santos Dumont do LNCC, resultou em um modelo capaz de lidar com tarefas complexas em português."
+    },
+    {
+        "index": 30,
+        "tags": [],
+        "content": "# Uso Recomendado"
+    },
+    {
+        "index": 31,
+        "tags": [],
+        "content": "Embora o Bode possa ser executado em uma CPU, é altamente recomendável utilizar o Kaggle com GPU para aproveitar todo o potencial do modelo. A biblioteca Transformers do HuggingFace facilita a integração do Bode em seus projetos, mas atenção: é necessário obter autorização de acesso ao LLaMa 2 para utilizá-lo plenamente."
+    },
+    {
+        "index": 32,
+        "tags": [],
+        "content": "Ao utilizar o Bode, uma das aplicações empolgantes que se destacam é a análise de sentimentos, uma tarefa clássica na área de processamento de linguagem natural. A análise de sentimentos permite determinar a polaridade emocional de um texto, classificando-o como positivo, negativo ou neutro, por exemplo. Essa tarefa é valiosa em uma variedade de cenários, desde avaliações de produtos até monitoramento de redes sociais."
+    },
+    {
+        "index": 33,
+        "tags": [],
+        "content": "**Análise de Sentimentos: Uma Breve Introdução**"
+    },
+    {
+        "index": 34,
+        "tags": [],
+        "content": "A análise de sentimentos é um problema importante na área de processamento de linguagem natural (PLN), focada em compreender e extrair as emoções expressas em um texto. A capacidade de identificar se uma declaração é positiva, negativa ou neutra é essencial para empresas que desejam entender a percepção pública de seus produtos, serviços ou marcas, por exemplo."
+    },
+    {
+        "index": 35,
+        "tags": [],
+        "content": "Com o avanço das tecnologias de LLMs, como o Bode, torna-se possível automatizar e aprimorar significativamente a análise de sentimentos, mesmo em cenários com poucos dados disponíveis para treinamento. Esses modelos têm a capacidade de capturar nuances contextuais, entender sarcasmo, e lidar com uma variedade de expressões emocionais, o que os torna instrumentos poderosos para essa tarefa."
+    },
+    {
+        "index": 36,
+        "tags": [],
+        "content": "Neste artigo avaliamos o desempenho do Bode em realizar a análise de sentimentos em uma base de tweets em português. O experimento foi conduzido seguindo a abordagem Zero Shot, sem realizar o ajuste fino do modelo a esta base específica. A boa performance de LLMs em tarefas para as quais ele sequer foi treinado especificamente é um dos grandes atrativos desses modelos."
+    },
+    {
+        "index": 37,
+        "tags": [],
+        "content": "**Avaliação da Análise de Sentimentos com LLMs**"
+    },
+    {
+        "index": 38,
+        "tags": [],
+        "content": "A avaliação de desempenho na análise de sentimentos é frequentemente realizada por meio de métricas como precisão, recall, F1-score e matriz de confusão. Essas métricas permitem medir quão bem o modelo classifica corretamente as diferentes polaridades emocionais, fornecendo uma visão clara de sua eficácia."
+    },
+    {
+        "index": 39,
+        "tags": [],
+        "content": "# Vamos à prática!"
+    },
+    {
+        "index": 40,
+        "tags": [],
+        "content": "Caso queira mais informações sobre o experimento realizado, disponibilizamos todo o código e explicação . Agora, mãos à obra!"
+    },
+    {
+        "index": 41,
+        "tags": [],
+        "content": "Antes de começar, precisamos instalar algumas bibliotecas que serão importantes em nossa implementação."
+    },
+    {
+        "index": 42,
+        "tags": [],
+        "content": "```\n!pip install accelerate==0.25.0 bitsandbytes==0.41.2.post2\n```"
+    },
+    {
+        "index": 43,
+        "tags": [],
+        "content": "Com as instalações finalizadas, vamos importar as bibliotecas que utilizaremos nesta implementação."
+    },
+    {
+        "index": 44,
+        "tags": [],
+        "content": "```\nimport pandas as pdfrom transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfigimport transformersimport torchfrom getpass import getpass\n```"
+    },
+    {
+        "index": 45,
+        "tags": [],
+        "content": "Com as instalações e importações realizadas, agora vamos instanciar nosso modelo, o dataset de análise de sentimentos que iremos utilizar, além de chamar a função getpass, onde colocaremos nossa chave do LLaMa 2."
+    },
+    {
+        "index": 46,
+        "tags": [],
+        "content": "Obs: Neste exemplo, vamos analisar um dataset muito utilizado de tweets em português disponibilizados na plataforma do Kaggle, para mais informações sobre este dataset,. Para tornar mais rápido nosso experimento, vamos utilizar apenas 200 dados de Teste disponíveis neste dataset."
+    },
+    {
+        "index": 47,
+        "tags": [],
+        "content": "```\nllm_model = ‘recogna-nlp/bode-7b-alpaca-pt-br-no-peft’dataset_path = ‘/kaggle/input/portuguese-tweets-for-sentiment-analysis/TestDatasets/Test.csv’hf_auth = getpass()df = pd.read_csv(dataset_path, delimiter=’;’)pdf = pd.concat([df[:100], df[2500:2600]])\n```"
+    },
+    {
+        "index": 48,
+        "tags": [],
+        "content": "Com as instâncias feitas, vamos carregar nosso modelo:"
+    },
+    {
+        "index": 49,
+        "tags": [],
+        "content": "```\nprint(“Carregando LLM…\\n”)model = AutoModelForCausalLM.from_pretrained(llm_model, trust_remote_code=True, return_dict=True, load_in_4bit=True, device_map=’auto’, token=hf_auth)tokenizer = AutoTokenizer.from_pretrained(llm_model, token=hf_auth)model = model.eval()\n```"
+    },
+    {
+        "index": 50,
+        "tags": [],
+        "content": "Após carregado o nosso modelo, podemos criar o pipeline de geração de texto:"
+    },
+    {
+        "index": 51,
+        "tags": [],
+        "content": "```\ngenerate_text = transformers.pipeline(model=model,tokenizer=tokenizer,task=’text-generation’,torch_dtype=torch.bfloat16,trust_remote_code=True,)\n```"
+    },
+    {
+        "index": 52,
+        "tags": [],
+        "content": "Para a realização deste experimento, vamos utilizar duas abordagens conhecidas: zero-shot e incontext-learning. A primeira abordagem consiste em realizar o experimento sem treinamento prévio específico, ou seja, executar a tarefa pela primeira vez sem nenhum conhecimento anterior direcionado à mesma. Já na segunda abordagem, utilizamos um contexto específico para que o BODE, compreenda e aprenda com base no prompt passado. Dessa forma, o modelo tomará uma decisão com base no conhecimento adquirido durante o treinamento, utilizando o contexto contido no prompt de entrada."
+    },
+    {
+        "index": 53,
+        "tags": [],
+        "content": "```\nprompt = “Você é um assistente de perguntas e respostas. Cada contexto passado será um tweet que está vinculada a um sentimento correspondente. \\No total, são 2 tipos de sentimentos: Positivo e Negativo. O seu objetivo é dado um tweet, encontrar qual é o seu sentimento correspondente. \\Abaixo estão alguns exemplos:\\n Tweet: :D que lindo dia ! Resposta: Positivo\\n\\Tweet: eu tô tão cansado :( Resposta: Negativo\\n\\Dado o contexto, responda em qual dos 3 tipos de sentimentos o tweet a seguir se enquadra.\\n”\n```"
+    },
+    {
+        "index": 54,
+        "tags": [],
+        "content": "Com base na instrução fornecida, procedemos a uma iteração no conjunto de dados predefinido contendo 200 entradas para realizar a classificação dos tweets. A fim de avaliar a precisão da resposta fornecida pelo BODE, aplicamos os mesmos parâmetros utilizados no conjunto de dados, onde atribuímos o valor 1 para tweets positivos e 0 para tweets negativos. É conhecido que os LLMs têm a capacidade de gerar respostas mais extensas do que simplesmente as palavras “Positivo” e “Negativo”. Portanto, implementamos a estratégia de extrair apenas a primeira palavra gerada pelo modelo, uma vez que, em muitas instâncias, essa primeira palavra corresponde à classificação solicitada pelo prompt."
+    },
+    {
+        "index": 55,
+        "tags": [],
+        "content": "```\npreds = []for question in tqdm(df['tweet_text']): input_text = f'Tweet: {question}. Resposta:' res = generate_text(prompt + input_text, do_sample=True, top_k=10, max_length=600, num_return_sequences=1, eos_token_id=tokenizer.eos_token_id ) r = res[0][\"generated_text\"].split()[-1] if 'Positivo' in r: preds.append(1) elif 'Negativo' in r: preds.append(0) else: print('ERRO:', r) preds.append(2)\n```"
+    },
+    {
+        "index": 56,
+        "tags": [],
+        "content": "# **Resultados**"
+    },
+    {
+        "index": 57,
+        "tags": [],
+        "content": "No processo de avaliação do experimento de classificação de sentimentos, empregamos diversas métricas para uma análise abrangente. Essas métricas, provenientes da biblioteca Scikit-learn (Sklearn), incluem a matriz de confusão, precisão, recall, F1 score e acurácia. Vamos sucintamente explicar cada uma delas:"
+    },
+    {
+        "index": 58,
+        "tags": [],
+        "content": "  * Matriz de Confusão:"
+    },
+    {
+        "index": 59,
+        "tags": [],
+        "content": "```\n[100 0][ 33 67]\n```"
+    },
+    {
+        "index": 60,
+        "tags": [],
+        "content": "A matriz de confusão apresenta a distribuição das predições do modelo em relação aos rótulos reais. No caso, temos 100 instâncias corretamente classificadas como positivas, 67 instâncias corretamente classificadas como negativas, 33 instâncias falsamente classificadas como negativas e nenhuma instância falsamente classificada como positiva."
+    },
+    {
+        "index": 61,
+        "tags": [],
+        "content": "  * Precisão (Precision):\n  * Precision: 0.876"
+    },
+    {
+        "index": 62,
+        "tags": [],
+        "content": ""
+    },
+    {
+        "index": 63,
+        "tags": [],
+        "content": "A precisão é a proporção de instâncias positivas previstas corretamente em relação ao total de instâncias previstas como positivas. Neste caso, 87.6% das predições positivas foram corretas."
+    },
+    {
+        "index": 64,
+        "tags": [],
+        "content": "  * Recall:\n  * Recall: 0.835"
+    },
+    {
+        "index": 65,
+        "tags": [],
+        "content": ""
+    },
+    {
+        "index": 66,
+        "tags": [],
+        "content": "O recall, também conhecido como sensibilidade ou taxa de verdadeiros positivos, é a proporção de instâncias positivas previstas corretamente em relação ao total de instâncias que são realmente positivas. Aqui, 83.5% das instâncias positivas foram corretamente identificadas."
+    },
+    {
+        "index": 67,
+        "tags": [],
+        "content": "  * Acurácia (Accuracy):\n  * Accuracy: 0.835"
+    },
+    {
+        "index": 68,
+        "tags": [],
+        "content": ""
+    },
+    {
+        "index": 69,
+        "tags": [],
+        "content": "A acurácia representa a proporção total de predições corretas em relação ao número total de instâncias. Neste caso, a acurácia geral é de 83.5%."
+    },
+    {
+        "index": 70,
+        "tags": [],
+        "content": "  * F1 Score:\n  * F1 Score: 0.830"
+    },
+    {
+        "index": 71,
+        "tags": [],
+        "content": ""
+    },
+    {
+        "index": 72,
+        "tags": [],
+        "content": "O F1 Score é uma métrica que combina precisão e recall em uma única medida. Ele é especialmente útil quando há um desequilíbrio nas classes. Neste contexto, o F1 Score é de 83%, indicando um equilíbrio entre precisão e recall."
+    },
+    {
+        "index": 73,
+        "tags": [],
+        "content": "Os resultados indicam que o modelo teve um bom desempenho na classificação de sentimentos. A alta precisão sugere que a maioria das predições positivas estava correta, enquanto o recall mostra que o modelo identificou uma grande proporção das instâncias positivas. A acurácia global e o F1 Score, que levam em consideração tanto os verdadeiros positivos quanto os verdadeiros negativos, também estão em um nível satisfatório."
+    },
+    {
+        "index": 74,
+        "tags": [],
+        "content": "# **Conclusão**"
+    },
+    {
+        "index": 75,
+        "tags": [],
+        "content": "O Bode emerge como uma promissora adição ao panorama de modelos de linguagem em português, apresentando-se como uma solução robusta e especializada para uma diversidade de tarefas em processamento de linguagem natural. Sua capacidade de compreender e gerar texto em português, aliada a um treinamento cuidadoso e a utilização de dados específicos do idioma, contribui para a eficácia e relevância do modelo."
+    },
+    {
+        "index": 76,
+        "tags": [],
+        "content": "Ao considerarmos a importância de modelos de linguagem em aplicações variadas, o Bode destaca-se como uma ferramenta valiosa para a comunidade que busca avançar em projetos relacionados à compreensão e geração de texto na língua portuguesa. Sua performance em tarefas como classificação de sentimentos, mencionada anteriormente, é um indicativo promissor do potencial abrangente deste modelo."
+    },
+    {
+        "index": 77,
+        "tags": [],
+        "content": "Além disso, o Bode beneficia-se da contínua contribuição da comunidade, que desempenha um papel crucial na evolução e aprimoramento constante do modelo. A colaboração e o feedback contínuo da comunidade fortalecem sua capacidade de adaptação e refinamento, proporcionando melhorias incrementais ao longo do tempo."
+    },
+    {
+        "index": 78,
+        "tags": [],
+        "content": "Em suma, o Bode não apenas atende às exigências atuais no campo de processamento de linguagem natural em português, mas também está bem posicionado para desbravar novos horizontes, impulsionando avanços significativos e contribuindo de maneira substancial para o progresso neste domínio em nossa língua materna. Seu impacto promissor evidencia o potencial transformador que modelos de linguagem como o Bode podem ter na forma como interagimos e utilizamos a linguagem no ambiente digital."
+    },
+    {
+        "index": 79,
+        "tags": [],
+        "content": "# Agradecimentos"
+    },
+    {
+        "index": 80,
+        "tags": [],
+        "content": "O desenvolvimento do Bode foi possível graças ao apoio do Laboratório Nacional de Computação Científica (LNCC/MCTI, Brasil), que forneceu recursos essenciais por meio do supercomputador SDumont. Expressamos nossa gratidão pelo suporte recebido no projeto Fundunesp 2019/00697–8."
+    },
+    {
+        "index": 81,
+        "tags": [],
+        "content": "Desenvolvido por: e ."
+    },
+    {
+        "index": 82,
+        "tags": [],
+        "content": "[Llm](/tag/llm?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 83,
+        "tags": [],
+        "content": "[NLP](/tag/nlp?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 84,
+        "tags": [],
+        "content": "[Português](/tag/português?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 85,
+        "tags": [],
+        "content": "[Llama 2](/tag/llama-2?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 86,
+        "tags": [],
+        "content": "[Bode](/tag/bode?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 87,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fvote%2Fp%2Fcb97f52935db&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fexplorando-o-bode-o-mais-novo-llm-em-portugu%25C3%25AAs-cb97f52935db&user=Recogna+NLP&userId=44da42865b40&source=---footer_actions--cb97f52935db---------------------clap_footer-----------)"
+    },
+    {
+        "index": 88,
+        "tags": [],
+        "content": "20"
+    },
+    {
+        "index": 89,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fvote%2Fp%2Fcb97f52935db&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fexplorando-o-bode-o-mais-novo-llm-em-portugu%25C3%25AAs-cb97f52935db&user=Recogna+NLP&userId=44da42865b40&source=---footer_actions--cb97f52935db---------------------clap_footer-----------)"
+    },
+    {
+        "index": 90,
+        "tags": [],
+        "content": "20"
+    },
+    {
+        "index": 91,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fcb97f52935db&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fexplorando-o-bode-o-mais-novo-llm-em-portugu%25C3%25AAs-cb97f52935db&source=---footer_actions--cb97f52935db---------------------bookmark_footer-----------)"
+    },
+    {
+        "index": 92,
+        "tags": [],
+        "content": "[![Recogna NLP](https://miro.medium.com/v2/resize:fill:48:48/0*EUXEyHSxqzu-QJjP)](/@recogna.nlp?source=post_page---post_author_info--cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 93,
+        "tags": [],
+        "content": "[![Recogna NLP](https://miro.medium.com/v2/resize:fill:64:64/0*EUXEyHSxqzu-QJjP)](/@recogna.nlp?source=post_page---post_author_info--cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 94,
+        "tags": [],
+        "content": "Follow"
+    },
+    {
+        "index": 95,
+        "tags": [],
+        "content": "## [Written by Recogna NLP](/@recogna.nlp?source=post_page---post_author_info--cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 96,
+        "tags": [],
+        "content": "[53 Followers](/@recogna.nlp/followers?source=post_page---post_author_info--cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 97,
+        "tags": [],
+        "content": "·[7 Following](/@recogna.nlp/following?source=post_page---post_author_info--cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 98,
+        "tags": [],
+        "content": "Follow"
+    },
+    {
+        "index": 99,
+        "tags": [],
+        "content": "## No responses yet"
+    },
+    {
+        "index": 100,
+        "tags": [],
+        "content": "[](https://policy.medium.com/medium-rules-30e5502c4eb4?source=post_page---post_responses--cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 101,
+        "tags": [],
+        "content": "[What are your thoughts?](/m/signin?operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fexplorando-o-bode-o-mais-novo-llm-em-portugu%C3%AAs-cb97f52935db&source=---post_responses--cb97f52935db---------------------respond_sidebar-----------)"
+    },
+    {
+        "index": 102,
+        "tags": [],
+        "content": "Cancel"
+    },
+    {
+        "index": 103,
+        "tags": [],
+        "content": "Respond"
+    },
+    {
+        "index": 104,
+        "tags": [],
+        "content": "Also publish to my profile"
+    },
+    {
+        "index": 105,
+        "tags": [],
+        "content": "## More from Recogna NLP"
+    },
+    {
+        "index": 106,
+        "tags": [],
+        "content": "![Descomplicando Agentes em LangChain](https://miro.medium.com/v2/resize:fit:679/0*5mH894EVUcYE1JFd)"
+    },
+    {
+        "index": 107,
+        "tags": [],
+        "content": "[![Recogna NLP](https://miro.medium.com/v2/resize:fill:20:20/0*EUXEyHSxqzu-QJjP)](/@recogna.nlp?source=author_recirc-----cb97f52935db----0---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 108,
+        "tags": [],
+        "content": "[Recogna NLP](/@recogna.nlp?source=author_recirc-----cb97f52935db----0---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 109,
+        "tags": [],
+        "content": "## [Descomplicando Agentes em LangChainNo último artigo, vimos que as chains podem ser usadas para realizar diversas tarefas, já que permitem o encadeamento de vários…](/@recogna.nlp/descomplicando-agentes-em-langchain-236e856ec687?source=author_recirc-----cb97f52935db----0---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 110,
+        "tags": [],
+        "content": "Oct 1"
+    },
+    {
+        "index": 111,
+        "tags": [],
+        "content": "[](/@recogna.nlp/descomplicando-agentes-em-langchain-236e856ec687?source=author_recirc-----cb97f52935db----0---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 112,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F236e856ec687&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fdescomplicando-agentes-em-langchain-236e856ec687&source=-----cb97f52935db----0-----------------bookmark_preview----d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 113,
+        "tags": [],
+        "content": "![Qubits e Portas Lógicas: Fundamentos de Circuitos Quânticos com Qiskit](https://miro.medium.com/v2/resize:fit:679/1*zGZj5LQYoF-8oW-W_ezRCQ.png)"
+    },
+    {
+        "index": 114,
+        "tags": [],
+        "content": "[![Recogna NLP](https://miro.medium.com/v2/resize:fill:20:20/0*EUXEyHSxqzu-QJjP)](/@recogna.nlp?source=author_recirc-----cb97f52935db----1---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 115,
+        "tags": [],
+        "content": "[Recogna NLP](/@recogna.nlp?source=author_recirc-----cb97f52935db----1---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 116,
+        "tags": [],
+        "content": "## [Qubits e Portas Lógicas: Fundamentos de Circuitos Quânticos com QiskitA computação quântica promete revolucionar a forma como processamos informações, oferecendo um poder de processamento exponencialmente…](/@recogna.nlp/qubits-e-portas-lógicas-fundamentos-de-circuitos-quânticos-com-qiskit-51d7b3e398d8?source=author_recirc-----cb97f52935db----1---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 117,
+        "tags": [],
+        "content": "Sep 27"
+    },
+    {
+        "index": 118,
+        "tags": [],
+        "content": "[6](/@recogna.nlp/qubits-e-portas-lógicas-fundamentos-de-circuitos-quânticos-com-qiskit-51d7b3e398d8?source=author_recirc-----cb97f52935db----1---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 119,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F51d7b3e398d8&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fqubits-e-portas-l%25C3%25B3gicas-fundamentos-de-circuitos-qu%25C3%25A2nticos-com-qiskit-51d7b3e398d8&source=-----cb97f52935db----1-----------------bookmark_preview----d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 120,
+        "tags": [],
+        "content": "![Uso de Prompts com LangChain](https://miro.medium.com/v2/resize:fit:679/1*1Aceenwe93NDNLT9ag2o-A.jpeg)"
+    },
+    {
+        "index": 121,
+        "tags": [],
+        "content": "[![Recogna NLP](https://miro.medium.com/v2/resize:fill:20:20/0*EUXEyHSxqzu-QJjP)](/@recogna.nlp?source=author_recirc-----cb97f52935db----2---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 122,
+        "tags": [],
+        "content": "[Recogna NLP](/@recogna.nlp?source=author_recirc-----cb97f52935db----2---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 123,
+        "tags": [],
+        "content": "## [Uso de Prompts com LangChainBem-vindo ao segundo artigo da série Introdução ao LangChain do Recogna-NLP. Se você ainda não sabe como importar grandes modelos de…](/@recogna.nlp/uso-de-prompts-com-langchain-8d4ed92d10c2?source=author_recirc-----cb97f52935db----2---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 124,
+        "tags": [],
+        "content": "Aug 2"
+    },
+    {
+        "index": 125,
+        "tags": [],
+        "content": "[9](/@recogna.nlp/uso-de-prompts-com-langchain-8d4ed92d10c2?source=author_recirc-----cb97f52935db----2---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 126,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F8d4ed92d10c2&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fuso-de-prompts-com-langchain-8d4ed92d10c2&source=-----cb97f52935db----2-----------------bookmark_preview----d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 127,
+        "tags": [],
+        "content": "![Executando LLMs em CPU: Bode e LLaMa.cpp](https://miro.medium.com/v2/resize:fit:679/1*PX1b_RoQL1Hg0NcRqub4bQ.jpeg)"
+    },
+    {
+        "index": 128,
+        "tags": [],
+        "content": "[![Recogna NLP](https://miro.medium.com/v2/resize:fill:20:20/0*EUXEyHSxqzu-QJjP)](/@recogna.nlp?source=author_recirc-----cb97f52935db----3---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 129,
+        "tags": [],
+        "content": "[Recogna NLP](/@recogna.nlp?source=author_recirc-----cb97f52935db----3---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 130,
+        "tags": [],
+        "content": "## [Executando LLMs em CPU: Bode e LLaMa.cppOs modelos de linguagem de grande porte (LLMs) têm se tornado cada vez mais poderosos e versáteis, trazendo grandes avanços para a área de…](/@recogna.nlp/executando-llms-em-cpu-bode-e-llama-cpp-013a129d7059?source=author_recirc-----cb97f52935db----3---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 131,
+        "tags": [],
+        "content": "Jul 24"
+    },
+    {
+        "index": 132,
+        "tags": [],
+        "content": "[2](/@recogna.nlp/executando-llms-em-cpu-bode-e-llama-cpp-013a129d7059?source=author_recirc-----cb97f52935db----3---------------------d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 133,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F013a129d7059&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40recogna.nlp%2Fexecutando-llms-em-cpu-bode-e-llama-cpp-013a129d7059&source=-----cb97f52935db----3-----------------bookmark_preview----d5faa096_9ec9_4814_bc8d_759197456ca3-------)"
+    },
+    {
+        "index": 134,
+        "tags": [],
+        "content": "[See all from Recogna NLP](/@recogna.nlp?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 135,
+        "tags": [],
+        "content": "## Recommended from Medium"
+    },
+    {
+        "index": 136,
+        "tags": [],
+        "content": "![Python is No More The King of Data Science](https://miro.medium.com/v2/resize:fit:679/1*uiA0nCufUQs-K64ebSUhew.jpeg)"
+    },
+    {
+        "index": 137,
+        "tags": [],
+        "content": "[![Stackademic](https://miro.medium.com/v2/resize:fill:20:20/1*U-kjsW7IZUobnoy1gAp1UQ.png)](https://medium.com/stackademic?source=read_next_recirc-----cb97f52935db----0---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 138,
+        "tags": [],
+        "content": "In"
+    },
+    {
+        "index": 139,
+        "tags": [],
+        "content": "[Stackademic](https://medium.com/stackademic?source=read_next_recirc-----cb97f52935db----0---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 140,
+        "tags": [],
+        "content": "by"
+    },
+    {
+        "index": 141,
+        "tags": [],
+        "content": "[Abdur Rahman](/@abdur-rahman?source=read_next_recirc-----cb97f52935db----0---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 142,
+        "tags": [],
+        "content": "## [Python is No More The King of Data Science5 Reasons Why Python is Losing Its Crown](/stackademic/is-python-still-the-king-of-data-science-476f1e3191b3?source=read_next_recirc-----cb97f52935db----0---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 143,
+        "tags": [],
+        "content": "Oct 23"
+    },
+    {
+        "index": 144,
+        "tags": [],
+        "content": "[9K34](/stackademic/is-python-still-the-king-of-data-science-476f1e3191b3?source=read_next_recirc-----cb97f52935db----0---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 145,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F476f1e3191b3&operation=register&redirect=https%3A%2F%2Fblog.stackademic.com%2Fis-python-still-the-king-of-data-science-476f1e3191b3&source=-----cb97f52935db----0-----------------bookmark_preview----38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 146,
+        "tags": [],
+        "content": "![Little box person holding a red plastic toy gem heart](https://miro.medium.com/v2/resize:fit:679/0*uJn-Wkkrvdr9IStb)"
+    },
+    {
+        "index": 147,
+        "tags": [],
+        "content": "[![Jennifer Hartmann](https://miro.medium.com/v2/resize:fill:20:20/1*tvqrCNptg54_ctfyFo3LQQ@2x.jpeg)](/@jenfireheartmama?source=read_next_recirc-----cb97f52935db----1---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 148,
+        "tags": [],
+        "content": "[Jennifer Hartmann](/@jenfireheartmama?source=read_next_recirc-----cb97f52935db----1---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 149,
+        "tags": [],
+        "content": "## [The Question That Ended My MarriageIn a rare moment of vulnerability, I asked my husband this question, and knew I’d just empowered us to divorce.](/@jenfireheartmama/the-question-that-ended-my-marriage-de7227b6f799?source=read_next_recirc-----cb97f52935db----1---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 150,
+        "tags": [],
+        "content": "Jul 8"
+    },
+    {
+        "index": 151,
+        "tags": [],
+        "content": "[33K525](/@jenfireheartmama/the-question-that-ended-my-marriage-de7227b6f799?source=read_next_recirc-----cb97f52935db----1---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 152,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fde7227b6f799&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40jenfireheartmama%2Fthe-question-that-ended-my-marriage-de7227b6f799&source=-----cb97f52935db----1-----------------bookmark_preview----38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 153,
+        "tags": [],
+        "content": "## Lists"
+    },
+    {
+        "index": 154,
+        "tags": [],
+        "content": "[![](https://miro.medium.com/v2/resize:fill:48:48/1*NBSmPKaxYHt116WUmclpMw.png)![decorative header. on the left a hand peruses books on a shelf. on the right, words read writing on medium, an intro to academic writing on medium](https://miro.medium.com/v2/resize:fill:48:48/1*i92OWKxBy8ELaH8XRb1oEw.jpeg)![](https://miro.medium.com/v2/resize:fill:48:48/1*HAiQljeyNc1IOy8EuMDODQ.jpeg)Staff picks781 stories·1491 saves](/@MediumStaff/list/staff-picks-c7bc6e1ee00f?source=read_next_recirc-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 155,
+        "tags": [],
+        "content": "[![](https://miro.medium.com/v2/resize:fill:48:48/1*4zC5ohNcmVDb1NXmzCvmNA.jpeg)![](https://miro.medium.com/v2/resize:fill:48:48/1*0dul7hn9LeV7U2XLVPvYYw.jpeg)![](https://miro.medium.com/v2/resize:fill:48:48/1*oO7uwYs0NMWV7B4mUCuoIw.png)Stories to Help You Level-Up at Work19 stories·891 saves](/@MediumStaff/list/stories-to-help-you-levelup-at-work-faca18b0622f?source=read_next_recirc-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 156,
+        "tags": [],
+        "content": "[![](https://miro.medium.com/v2/resize:fill:48:48/1*VQhBEVqZRXlxFvFVqyTYVA.jpeg)![](https://miro.medium.com/v2/resize:fill:48:48/1*XRekBY0_j_KEo2_lK_SrkQ.jpeg)![](https://miro.medium.com/v2/resize:fill:48:48/1*c2stHqktjG8_XTqkC-bkfw.jpeg)Self-Improvement 10120 stories·3117 saves](/@MediumForTeams/list/selfimprovement-101-3c62b6cb0526?source=read_next_recirc-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 157,
+        "tags": [],
+        "content": "[![](https://miro.medium.com/v2/resize:fill:48:48/1*HWxGot_WiEOZ0fkB_ee2gg.jpeg)![](https://miro.medium.com/v2/resize:fill:48:48/1*kAzwx9sMsEYm0bMYDTa-lQ.jpeg)![](https://miro.medium.com/v2/resize:fill:48:48/1*GGLm6Juo_CxQAKEM-mAWfw.jpeg)Productivity 10120 stories·2625 saves](/@MediumForTeams/list/productivity-101-f09f1aaf38cd?source=read_next_recirc-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 158,
+        "tags": [],
+        "content": "![Jeff Bezos Says the 1-Hour Rule Makes Him Smarter. New Neuroscience Says He’s Right](https://miro.medium.com/v2/resize:fit:679/1*h-Y6W5VfM8lath9myNS5tQ.jpeg)"
+    },
+    {
+        "index": 159,
+        "tags": [],
+        "content": "[![Jessica Stillman](https://miro.medium.com/v2/resize:fill:20:20/2*WCWpog6WqKnaXo5lhsRLZA.jpeg)](/@entrylevelrebel?source=read_next_recirc-----cb97f52935db----0---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 160,
+        "tags": [],
+        "content": "[Jessica Stillman](/@entrylevelrebel?source=read_next_recirc-----cb97f52935db----0---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 161,
+        "tags": [],
+        "content": "## [Jeff Bezos Says the 1-Hour Rule Makes Him Smarter. New Neuroscience Says He’s RightJeff Bezos’s morning routine has long included the one-hour rule. New neuroscience says yours probably should too.](/@entrylevelrebel/jeff-bezos-says-the-1-hour-rule-makes-him-smarter-new-neuroscience-says-hes-right-84bf0a6755cf?source=read_next_recirc-----cb97f52935db----0---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 162,
+        "tags": [],
+        "content": "Oct 30"
+    },
+    {
+        "index": 163,
+        "tags": [],
+        "content": "[14.4K335](/@entrylevelrebel/jeff-bezos-says-the-1-hour-rule-makes-him-smarter-new-neuroscience-says-hes-right-84bf0a6755cf?source=read_next_recirc-----cb97f52935db----0---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 164,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F84bf0a6755cf&operation=register&redirect=https%3A%2F%2Fentrylevelrebel.medium.com%2Fjeff-bezos-says-the-1-hour-rule-makes-him-smarter-new-neuroscience-says-hes-right-84bf0a6755cf&source=-----cb97f52935db----0-----------------bookmark_preview----38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 165,
+        "tags": [],
+        "content": "![Common side effects of not drinking](https://miro.medium.com/v2/resize:fit:679/1*wd_HmipNaZS3-FWSgXc8WQ.jpeg)"
+    },
+    {
+        "index": 166,
+        "tags": [],
+        "content": "[![Karolina Kozmana](https://miro.medium.com/v2/resize:fill:20:20/1*Tgt9nqR426wn7hKCtcrWoQ@2x.jpeg)](/@k.kozmana?source=read_next_recirc-----cb97f52935db----1---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 167,
+        "tags": [],
+        "content": "[Karolina Kozmana](/@k.kozmana?source=read_next_recirc-----cb97f52935db----1---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 168,
+        "tags": [],
+        "content": "## [Common side effects of not drinkingBy rejecting alcohol, you reject something very human, an extra limb that we have collectively grown to deal with reality and with each…](/@k.kozmana/common-side-effects-of-not-drinking-dd44714e619a?source=read_next_recirc-----cb97f52935db----1---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 169,
+        "tags": [],
+        "content": "Jan 21"
+    },
+    {
+        "index": 170,
+        "tags": [],
+        "content": "[49K1366](/@k.kozmana/common-side-effects-of-not-drinking-dd44714e619a?source=read_next_recirc-----cb97f52935db----1---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 171,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fdd44714e619a&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40k.kozmana%2Fcommon-side-effects-of-not-drinking-dd44714e619a&source=-----cb97f52935db----1-----------------bookmark_preview----38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 172,
+        "tags": [],
+        "content": "![I used OpenAI’s o1 model to develop a trading strategy. It is DESTROYING the market](https://miro.medium.com/v2/resize:fit:679/1*MuD60qiJYZ1GJSSraELZpg.png)"
+    },
+    {
+        "index": 173,
+        "tags": [],
+        "content": "[![DataDrivenInvestor](https://miro.medium.com/v2/resize:fill:20:20/1*2mBCfRUpdSYRuf9EKnhTDQ.png)](https://medium.com/datadriveninvestor?source=read_next_recirc-----cb97f52935db----2---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 174,
+        "tags": [],
+        "content": "In"
+    },
+    {
+        "index": 175,
+        "tags": [],
+        "content": "[DataDrivenInvestor](https://medium.com/datadriveninvestor?source=read_next_recirc-----cb97f52935db----2---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 176,
+        "tags": [],
+        "content": "by"
+    },
+    {
+        "index": 177,
+        "tags": [],
+        "content": "[Austin Starks](/@austin-starks?source=read_next_recirc-----cb97f52935db----2---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 178,
+        "tags": [],
+        "content": "## [I used OpenAI’s o1 model to develop a trading strategy. It is DESTROYING the marketIt literally took one try. I was shocked.](/datadriveninvestor/i-used-openais-o1-model-to-develop-a-trading-strategy-it-is-destroying-the-market-576a6039e8fa?source=read_next_recirc-----cb97f52935db----2---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 179,
+        "tags": [],
+        "content": "Sep 15"
+    },
+    {
+        "index": 180,
+        "tags": [],
+        "content": "[6.8K179](/datadriveninvestor/i-used-openais-o1-model-to-develop-a-trading-strategy-it-is-destroying-the-market-576a6039e8fa?source=read_next_recirc-----cb97f52935db----2---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 181,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F576a6039e8fa&operation=register&redirect=https%3A%2F%2Fmedium.datadriveninvestor.com%2Fi-used-openais-o1-model-to-develop-a-trading-strategy-it-is-destroying-the-market-576a6039e8fa&source=-----cb97f52935db----2-----------------bookmark_preview----38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 182,
+        "tags": [],
+        "content": "![How I Am Using a Lifetime 100% Free Server](https://miro.medium.com/v2/resize:fit:679/1*BqVsCBa2mLv1UWQrdhjX5w.png)"
+    },
+    {
+        "index": 183,
+        "tags": [],
+        "content": "[![Harendra](https://miro.medium.com/v2/resize:fill:20:20/1*uTEzlRvlNBr3ralJoTQkmg.jpeg)](/@harendra21?source=read_next_recirc-----cb97f52935db----3---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 184,
+        "tags": [],
+        "content": "[Harendra](/@harendra21?source=read_next_recirc-----cb97f52935db----3---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 185,
+        "tags": [],
+        "content": "## [How I Am Using a Lifetime 100% Free ServerGet a server with 24 GB RAM + 4 CPU + 200 GB Storage + Always Free](/@harendra21/how-i-am-using-a-lifetime-100-free-server-bd241e3a347a?source=read_next_recirc-----cb97f52935db----3---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 186,
+        "tags": [],
+        "content": "Oct 26"
+    },
+    {
+        "index": 187,
+        "tags": [],
+        "content": "[6.5K98](/@harendra21/how-i-am-using-a-lifetime-100-free-server-bd241e3a347a?source=read_next_recirc-----cb97f52935db----3---------------------38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 188,
+        "tags": [],
+        "content": "[](/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fbd241e3a347a&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40harendra21%2Fhow-i-am-using-a-lifetime-100-free-server-bd241e3a347a&source=-----cb97f52935db----3-----------------bookmark_preview----38c072f8_b28a_4ae5_a792_5af0ae034c52-------)"
+    },
+    {
+        "index": 189,
+        "tags": [],
+        "content": "[See more recommendations](/?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 190,
+        "tags": [],
+        "content": "[Help](https://help.medium.com/hc/en-us?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 191,
+        "tags": [],
+        "content": "[About](/about?autoplay=1&source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 192,
+        "tags": [],
+        "content": "[Careers](/jobs-at-medium/work-at-medium-959d1a85284e?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 193,
+        "tags": [],
+        "content": "[Press](pressinquiries@medium.com?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 194,
+        "tags": [],
+        "content": "[Blog](https://blog.medium.com/?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 195,
+        "tags": [],
+        "content": "[Privacy](https://policy.medium.com/medium-privacy-policy-f03bf92035c9?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 196,
+        "tags": [],
+        "content": "[Terms](https://policy.medium.com/medium-terms-of-service-9db0094a1e0f?source=post_page-----cb97f52935db--------------------------------)"
+    },
+    {
+        "index": 197,
+        "tags": [],
+        "content": "[Teams](/business?source=post_page-----cb97f52935db--------------------------------)\n"
+    }
+]

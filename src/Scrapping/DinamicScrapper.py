@@ -15,6 +15,9 @@ load_dotenv()
 # Configuração do modelo LLM
 MODEL_URL = os.getenv("MODEL_URL_REQUEST")
 
+if not MODEL_URL:
+    raise EnvironmentError("A variável de ambiente MODEL_URL não foi configurada corretamente.")
+
 # Configuração do Selenium
 def setup_driver():
     chrome_options = Options()
