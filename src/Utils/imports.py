@@ -1,4 +1,5 @@
 import os
+import logging
 from dotenv import load_dotenv
 
 # Carregar variáveis de ambiente
@@ -6,9 +7,10 @@ load_dotenv()
 MODEL_URL = os.getenv("MODEL_URL")
 PROMPT = os.getenv("PROMPT")
 MODEL_URL_REQUEST = os.getenv("MODEL_URL_REQUEST")
+CHROME_DRIVER = os.getenv("CHROME_DRIVER")
 
-if not MODEL_URL or not PROMPT or not MODEL_URL_REQUEST:
-    raise EnvironmentError("A variável de ambiente MODEL_URL não foi configurada corretamente.")
+if not MODEL_URL or not PROMPT or not MODEL_URL_REQUEST or not CHROME_DRIVER:
+    raise EnvironmentError("As variáveis de ambiente não foram configuradas corretamente.")
 
 GRAPH_CONFIG = {
     "llm": {
@@ -24,3 +26,17 @@ GRAPH_CONFIG = {
     "headless": True,
     "verbose": False,
 }
+
+schema = {
+        'descricao': "Descrição do texto",
+        'tag': "Categoria do site",
+        'metadados': "Metadados adicionais",
+        'descricao completa': "Detalhamento do que é entendido"
+        }
+
+# Configuração do logger
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.StreamHandler()]
+)
