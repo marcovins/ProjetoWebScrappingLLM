@@ -2,9 +2,15 @@ import json
 import re
 
 def limpar_json(input_json):
-    # O input_json é uma string JSON que pode conter texto extra (markdown, por exemplo)
-    
-    # Tentamos isolar o conteúdo JSON dentro da chave 'result' do input JSON
+    """
+    Limpa um dicionário removendo caracteres indesejados e garantindo a formatação correta.
+
+    Args:
+        input_json (dict): Dicionário contendo os dados a serem limpos.
+
+    Returns:
+        dict: Dicionário limpo com os caracteres indesejados removidos.
+    """
     try:
         
         # Verifica se a marcação está presente
@@ -76,7 +82,17 @@ def limpar_json(input_json):
         return {}
 
 
-def texto_para_json(texto):
+def texto_para_json(texto:str) ->dict :
+    """
+    Utilizar quando a função limpar_json() devolver resultado vazio.
+    Gera um json a partir do texto, se a LLM retornar a resposta da forma errada.
+
+    Args:
+        texto (str): Dicionário contendo os dados a serem limpos.
+
+    Returns:
+        dict: Dicionário limpo com os caracteres indesejados removidos.
+    """
     try:
         # Localiza o primeiro asterisco e corta a string
         pos = texto.find("*")
