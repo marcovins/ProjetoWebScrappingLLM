@@ -9,8 +9,9 @@ PROMPT = os.getenv("PROMPT")
 MODEL_URL_REQUEST = os.getenv("MODEL_URL_REQUEST")
 CHROME_DRIVER = os.getenv("CHROME_DRIVER")
 COOKIES = os.getenv("COOKIES")
+SCRAPS = os.getenv("SCRAPS")
 
-if not MODEL_URL or not PROMPT or not MODEL_URL_REQUEST or not CHROME_DRIVER or not COOKIES:
+if not MODEL_URL or not PROMPT or not MODEL_URL_REQUEST or not CHROME_DRIVER or not COOKIES or not SCRAPS:
     raise EnvironmentError("As variáveis de ambiente não foram configuradas corretamente.")
 
 GRAPH_CONFIG = {
