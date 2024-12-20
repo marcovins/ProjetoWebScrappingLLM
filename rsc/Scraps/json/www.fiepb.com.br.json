@@ -1,0 +1,22 @@
+Aqui está a estrutura JSON com as principais características do conteúdo:
+
+```json
+{
+  "descricao": "Notícias e atualizações sobre a Federação das Indústrias do Estado da Paraíba (FIEPB) e suas ações, eventos e parcerias.",
+  "tag": "Indústria, Economia, Educação",
+  "metadados": {
+    "data_publicacao": "2024-01-01",
+    "autor": "FIEPB"
+  },
+  "descricao_completa": "A Federação das Indústrias do Estado da Paraíba (FIEPB) é uma entidade que representa as interesses de empresas e sindicatos no estado da Paraíba. O site oferece notícias, atualizações e informações sobre eventos, parcerias e ações da FIEPB, além de conteúdo educacional e promocional."
+}
+```
+
+As principais características do conteúdo são:
+
+*   **Descrição**: A descrição do conteúdo é "Notícias e atualizações sobre a Federação das Indústrias do Estado da Paraíba (FIEPB) e suas ações, eventos e parcerias."
+*   **Categoria**: A categoria do conteúdo é "Indústria, Economia, Educação".
+*   **Metadados**: Os metadados incluem a data de publicação (2024-01-01) e o autor do conteúdo (FIEPB).
+*   **Descrição completa**: A descrição completa do conteúdo é "A Federação das Indústrias do Estado da Paraíba (FIEPB) é uma entidade que representa as interesses de empresas e sindicatos no estado da Paraíba. O site oferece notícias, atualizações e informações sobre eventos, parcerias e ações da FIEPB, além de conteúdo educacional e promocional."
+
+Essas características fornecem uma visão geral do conteúdo e ajudam a entender o foco e o público-alvo do site.

@@ -22,11 +22,11 @@ FIEPB apresenta programa da Nova Indústria Paraíba em evento internacional sob
 
 Aprendizagem criativa: SENAI apresenta metodologia para municípios do cariri paraibano
 
+Estoque de produtos volta ao patamar planejado pelos industriais após seis meses
+
 PIB deve crescer 2,4% em 2025, projeta CNI
 
 Pequenas empresas, grandes mercados: CNI acelera internacionalização brasileira
-
-CNI apresenta perspectivas para a economia em 2025 e os últimos dados do setor em 2024
 
 Paraíba Tem - #020 - SESI Museu Digital e a história de Campina Grande
 
