@@ -3,14 +3,32 @@ import re
 
 def limpar_json(input_json):
     """
-    Limpa um dicionário removendo caracteres indesejados e garantindo a formatação correta.
+    Limpa e extrai dados de um JSON embutido dentro de um texto, removendo caracteres indesejados e 
+    garantindo a formatação correta do conteúdo JSON.
+
+    A função busca um bloco JSON dentro de uma string de entrada, que pode estar contido entre as marcações 
+    de blocos de código (```json e ```) ou simples marcações de código (``` e ```). Ela remove caracteres de 
+    controle indesejados (como quebras de linha ou tabulação), extrai o JSON e a URL associada (se presente), 
+    e retorna um dicionário limpo.
 
     Args:
-        input_json (dict): Dicionário contendo os dados a serem limpos.
+        input_json (str): Texto de entrada que pode conter um JSON embutido, com ou sem a marcação `json`.
 
     Returns:
-        dict: Dicionário limpo com os caracteres indesejados removidos.
+        dict: Dicionário contendo a URL extraída (se presente) e o JSON limpo em um campo 'result'.
+              Retorna um dicionário vazio em caso de erro ou se a formatação do JSON não for encontrada.
+
+    Raises:
+        ValueError: Caso o JSON não seja encontrado corretamente dentro do texto.
+        json.JSONDecodeError: Caso o conteúdo JSON embutido não seja válido.
+
+    Exemplo:
+        input_text = 'Texto inicial ```json\n{"key": "value"}\n``` Texto final'
+        result = limpar_json(input_text)
+        print(result)
+        # Saída esperada: {'url': 'url_extraída', 'result': {'key': 'value'}}
     """
+
     try:
         
         # Verifica se a marcação está presente
@@ -84,14 +102,33 @@ def limpar_json(input_json):
 
 def texto_para_json(texto:str) ->dict :
     """
-    Utilizar quando a função limpar_json() devolver resultado vazio.
-    Gera um json a partir do texto, se a LLM retornar a resposta da forma errada.
+    Converte um texto estruturado em formato de lista com asteriscos (`*`) em um dicionário JSON.
+
+    Esta função é útil quando a função `limpar_json()` retorna um resultado vazio e a resposta da LLM (Language Model) 
+    não está no formato esperado. Ela converte um texto onde cada linha que começa com um asterisco (`*`) 
+    é interpretada como um par chave-valor no formato 'chave: valor'. As linhas que não seguem esse formato 
+    são ignoradas.
 
     Args:
-        texto (str): Dicionário contendo os dados a serem limpos.
+        texto (str): Texto que será processado para gerar um dicionário. O texto deve ter linhas que começam com 
+                     asteriscos (`*`) para indicar pares chave-valor, no formato 'chave: valor'.
 
     Returns:
-        dict: Dicionário limpo com os caracteres indesejados removidos.
+        dict: Dicionário gerado a partir do texto. Se ocorrer algum erro durante o processamento, 
+              um dicionário com uma chave "error" será retornado, contendo a descrição do erro.
+
+    Exemplo:
+        texto = "
+        * Nome: João
+        * Idade: 30
+        * Cidade: São Paulo
+        "
+        resultado = texto_para_json(texto)
+        print(resultado)
+        # Saída esperada: {'Nome': 'João', 'Idade': '30', 'Cidade': 'São Paulo'}
+
+    Raises:
+        ValueError: Caso o texto não contenha nenhum asterisco (`*`) ou se houver algum erro ao processar o texto.
     """
     try:
         # Localiza o primeiro asterisco e corta a string

@@ -1,8 +1,10 @@
+import asyncio
+import aiofiles
 from bs4 import BeautifulSoup
 from src.Schemas.ResponseSchema import ResponseSchema
 from src.Utils.http_utils import make_request_to_model, exist_cookies, contains_cookie_terms
 from scrapegraphai.graphs import SmartScraperGraph
-from src.Utils.imports import PROMPT, GRAPH_CONFIG, COOKIES
+from src.Utils.imports import PROMPT, GRAPH_CONFIG, COOKIES, SCRAPS
 from src.Utils.driver_utils import setup_driver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -11,16 +13,45 @@ import logging, json, re, time, os
 
 from src.Utils.json_utils import limpar_json
 
-def StaticScrapper(url: str) -> dict | None:
+async def StaticScrapper(url: str) -> dict | None:
     """
-    Realiza scraping estático de uma URL utilizando a biblioteca SmartScraperGraph.
+    Realiza scraping estático de uma URL utilizando a biblioteca SmartScraperGraph, extraindo dados estruturados 
+    de uma página da web com base no esquema de resposta configurado.
 
-    Args:
-        url (str): URL a ser processada.
+    A função utiliza o SmartScraperGraph para realizar scraping de forma eficiente e extrair dados específicos 
+    da URL fornecida. A extração é baseada no prompt e na configuração previamente definidos.
 
-    Returns:
-        dict: Dados extraídos da URL.
+    Parâmetros:
+    url (str): A URL da página da web que será processada.
+
+    Retorna:
+    dict: Um dicionário contendo os dados extraídos da URL, de acordo com o esquema de resposta configurado,
+          ou None caso ocorra um erro durante o processo de scraping.
+
+    Exceções:
+    Caso ocorra qualquer erro durante a execução da função (por exemplo, erro na comunicação com o SmartScraperGraph),
+    a função captura a exceção, registra um erro no log, e retorna None.
+
+    Exemplo de uso:
+    ```python
+    result = await StaticScrapper("https://example.com")
+    if result:
+        print(result)
+    else:
+        print("Erro ao realizar o scraping estático.")
+    ```
+
+    Observações:
+    - A função faz uso da classe `SmartScraperGraph`, que requer a configuração prévia de um `prompt`, `source`, `config`, 
+      e `schema` para realizar o scraping e a extração dos dados de forma eficaz.
+    - O parâmetro `PROMPT` e a configuração `GRAPH_CONFIG` devem estar definidos e configurados corretamente para que a extração
+      ocorra conforme esperado.
+    - A função é assíncrona e deve ser chamada dentro de um contexto de execução assíncrona.
+
+    Logs:
+    - Caso ocorra um erro no processo de scraping, a função registra uma mensagem de erro no log.
     """
+
     try:
         smart_scraper_graph = SmartScraperGraph(
             prompt=PROMPT,
@@ -28,20 +59,50 @@ def StaticScrapper(url: str) -> dict | None:
             config=GRAPH_CONFIG,
             schema=ResponseSchema
         )
-        return smart_scraper_graph.run()
+        return await smart_scraper_graph.run()
     except Exception as e:
         logging.error("Erro no scraper estático: %s", str(e))
         return None
 
 def getSource(url: str) -> str:
     """
-    Obtém o HTML da página utilizando Selenium.
+    Obtém o HTML de uma página web utilizando o Selenium, garantindo que cookies sejam 
+    aceitos e carregados corretamente, simulando scroll para garantir o carregamento completo da página.
 
-    Args:
-        url (str): URL da página a ser acessada.
+    A função executa as seguintes etapas:
+    1. Configura o driver do Selenium.
+    2. Verifica se já existem cookies salvos para a URL fornecida.
+    3. Caso os cookies não existam, acessa a página para coletá-los e aceita o pop-up de cookies, se presente.
+    4. Adiciona os cookies salvos ao driver e recarrega a página com os cookies aplicados.
+    5. Aguarda o carregamento completo da página e simula o scroll para garantir que todo o conteúdo seja carregado.
+    6. Retorna o HTML da página após o carregamento completo.
 
-    Returns:
-        str: HTML da página carregada.
+    Parâmetros:
+    url (str): A URL da página web a ser acessada e carregada.
+
+    Retorna:
+    str: O código HTML da página carregada com sucesso, ou None caso ocorra algum erro no processo.
+
+    Exceções:
+    - Caso haja erro na execução de qualquer uma das etapas, um erro será registrado e a função retornará None.
+
+    Exemplo de uso:
+    ```python
+    html = getSource("https://example.com")
+    if html:
+        print(html)
+    else:
+        print("Erro ao carregar a página.")
+    ```
+
+    Observações:
+    - A função depende da configuração de um driver Selenium, que deve ser configurado previamente com a função `setup_driver()`.
+    - O processo de aceitação de cookies pode ser ignorado se o botão não for encontrado, mas a função continuará a tentar carregar a página.
+    - O arquivo de cookies é salvo localmente para evitar a necessidade de nova coleta para páginas que já foram acessadas.
+    - A função simula scroll até o final da página e de volta ao topo para garantir que o conteúdo dinâmico seja totalmente carregado antes de extrair o HTML.
+
+    Logs:
+    - Logs informativos sobre o status da coleta de cookies, aceitação do pop-up de cookies, e erros durante o processo de carregamento da página.
     """
     
     driver = None
@@ -128,16 +189,37 @@ def getSource(url: str) -> str:
 
 def filtrar_sequencias(texto: str) -> str:
     """
-    Filtra sequências específicas de um texto, removendo URLs e strings com 
-    pelo menos 40 caracteres alfanuméricos consecutivos. Além disso, reduz 
-    espaços consecutivos para um único espaço.
+    Filtra sequências específicas de um texto, removendo URLs e strings alfanuméricas 
+    com pelo menos 40 caracteres consecutivos. Além disso, normaliza espaços consecutivos 
+    para um único espaço.
 
-    Args:
-        texto (str): Texto de entrada a ser processado.
+    Esta função realiza duas principais modificações no texto:
+    1. Remove URLs que começam com "http" ou "https".
+    2. Remove sequências alfanuméricas longas (com pelo menos 40 caracteres consecutivos).
+    3. Substitui múltiplos espaços consecutivos por um único espaço.
 
-    Returns:
-        str: Texto filtrado, sem URLs, sem sequências alfanuméricas longas e 
-        com espaçamento normalizado.
+    Parâmetros:
+    texto (str): O texto de entrada a ser processado. Pode conter URLs, sequências alfanuméricas longas 
+                 ou espaços excessivos que precisam ser removidos.
+
+    Retorna:
+    str: O texto filtrado, sem URLs, sem sequências alfanuméricas longas e com espaçamento normalizado 
+         (apenas um espaço entre palavras e sem espaços no início ou no final).
+
+    Exemplos:
+    ```python
+    texto_original = "Visite https://exemplo.com para mais informações. Lorem ipsum dolor sit amet."
+    texto_filtrado = filtrar_sequencias(texto_original)
+    # Saída: "Visite para mais informações. Lorem ipsum dolor sit amet."
+    ```
+
+    Observações:
+    - A função usa expressões regulares (regex) para identificar URLs e sequências alfanuméricas longas.
+    - Após a remoção das sequências indesejadas, a função normaliza os espaços no texto, eliminando espaços extras.
+    - O texto retornado está sem espaços no início ou no final, após o uso de `.strip()`.
+
+    Logs:
+    A função não gera logs diretamente, mas pode ser usada para pré-processamento de dados em outras funções de logging.
     """
     padrao = r"(https?:\/\/\S+)|(\b[a-zA-Z0-9_\-]{40,}\b)"
     texto_filtrado = re.sub(padrao, "", texto)
@@ -146,65 +228,127 @@ def filtrar_sequencias(texto: str) -> str:
 
 def parseHTML(html: str) -> dict:
     """
-    Processa o HTML extraído e organiza os dados.
+    Processa o HTML extraído de uma página e organiza os dados relevantes em um dicionário.
 
-    Args:
-        html (str): HTML da página a ser processado.
+    Esta função utiliza a biblioteca BeautifulSoup para analisar o HTML de uma página e extrair informações importantes,
+    como título da página, meta descrição, palavras-chave, favicon, tags de parágrafos, títulos (h1, h2) e imagens. 
+    Os dados extraídos são retornados em um dicionário estruturado.
 
-    Returns:
-        dict: Dados extraídos, incluindo título, meta descrição e parágrafos.
+    Parâmetros:
+    html (str): O conteúdo HTML da página a ser processado. Deve ser uma string contendo o código HTML da página.
+
+    Retorna:
+    dict: Um dicionário contendo os dados extraídos do HTML. Os dados podem incluir:
+          - 'title': O título da página.
+          - 'meta_description': A meta descrição da página.
+          - 'meta_keywords': As palavras-chave associadas à página.
+          - 'favicon': A URL do favicon da página.
+          - 'p_tags': Lista de parágrafos extraídos da página.
+          - 'h1_tags': Lista de tags H1 extraídas da página.
+          - 'h2_tags': Lista de tags H2 extraídas da página.
+          - 'images': Lista de dicionários contendo as URLs das imagens e seus atributos 'alt'.
+
+    Exemplos:
+    ```python
+    html_content = "<html><head><title>Example</title></head><body><p>Texto de exemplo</p></body></html>"
+    data = parseHTML(html_content)
+    ```
+
+    Observações:
+    - A função usa `filtrar_sequencias` para limpar o conteúdo de texto extraído, removendo caracteres indesejados.
+    - As tags de parágrafos, h1 e h2 são filtradas para garantir que não contenham termos relacionados a cookies.
+    - As imagens extraídas incluem suas URLs (atributo 'src') e descrições alternativas (atributo 'alt').
+    - Caso não existam elementos correspondentes (ex. 'title', 'meta_description', etc.), esses campos são omitidos do dicionário retornado.
+
+    Logs:
+    A função não gera logs diretamente, mas os resultados podem ser usados posteriormente em outras funções de logging.
     """
     data = {}
 
     # Continue com o resto da análise do HTML com BeautifulSoup
     soup = BeautifulSoup(html, 'html.parser')
 
+    # Função para verificar se o conteúdo não é vazio ou só contém espaços
+    def is_not_empty(content):
+        return bool(content.strip())
+
     # Extração de dados padrão
     title = filtrar_sequencias(soup.find('title').text) if soup.find('title') else None
-    if title:
+    if title and is_not_empty(title):
         data['title'] = title
 
     meta_description = soup.find('meta', attrs={'name': 'description'})
     if meta_description:
-        data['meta_description'] = filtrar_sequencias(meta_description.get('content', ''))
+        description = filtrar_sequencias(meta_description.get('content', ''))
+        if is_not_empty(description):
+            data['meta_description'] = description
 
     meta_keywords = soup.find('meta', attrs={'name': 'keywords'})
     if meta_keywords:
-        data['meta_keywords'] = filtrar_sequencias(meta_keywords.get('content', ''))
+        keywords = filtrar_sequencias(meta_keywords.get('content', ''))
+        if is_not_empty(keywords):
+            data['meta_keywords'] = keywords
 
     favicon = soup.find('link', rel='icon')
     if favicon:
-        data['favicon'] = filtrar_sequencias(favicon.get('href', ''))
+        favicon_url = filtrar_sequencias(favicon.get('href', ''))
+        if is_not_empty(favicon_url):
+            data['favicon'] = favicon_url
 
     # tags p, h1, h2
     p_tags = [filtrar_sequencias(tag.text) for tag in soup.find_all('p') if not contains_cookie_terms(tag.text)]
-    if p_tags:
-        data['p_tags'] = p_tags
+    if p_tags and any(is_not_empty(tag) for tag in p_tags):
+        data['p_tags'] = [tag for tag in p_tags if is_not_empty(tag)]
 
     h1_tags = [filtrar_sequencias(tag.text) for tag in soup.find_all('h1') if not contains_cookie_terms(tag.text)]
-    if h1_tags:
-        data['h1_tags'] = h1_tags
+    if h1_tags and any(is_not_empty(tag) for tag in h1_tags):
+        data['h1_tags'] = [tag for tag in h1_tags if is_not_empty(tag)]
 
     h2_tags = [filtrar_sequencias(tag.text) for tag in soup.find_all('h2') if not contains_cookie_terms(tag.text)]
-    if h2_tags:
-        data['h2_tags'] = h2_tags
+    if h2_tags and any(is_not_empty(tag) for tag in h2_tags):
+        data['h2_tags'] = [tag for tag in h2_tags if is_not_empty(tag)]
 
     images = [{'src': filtrar_sequencias(img['src']), 'alt': filtrar_sequencias(img.get('alt', 'Sem descrição'))}
-              for img in soup.find_all('img', src=True)]
+            for img in soup.find_all('img', src=True)]
     if images:
-        data['images'] = images
+        data['images'] = [img for img in images if is_not_empty(img['src'])]
 
     return data
 
-def to_markdown(data: dict) -> str:
+async def to_markdown(data: dict, url:str) -> str:
     """
-    Converte os dados processados em formato Markdown.
+    Converte os dados extraídos de uma página em um formato Markdown.
 
-    Args:
-        data (dict): Dados extraídos da página.
+    Esta função pega os dados extraídos de uma página web (como título, meta descrição, palavras-chave,
+    tags de cabeçalho, parágrafos e imagens) e os organiza em um conteúdo estruturado em formato Markdown. 
+    O conteúdo gerado é salvo em um arquivo `.md` no diretório de markdowns e também retornado como string.
 
-    Returns:
-        str: Conteúdo em formato Markdown.
+    Parâmetros:
+    data (dict): Um dicionário contendo os dados extraídos da página, que pode incluir:
+                 - 'title': Título da página.
+                 - 'meta_description': Descrição meta da página.
+                 - 'meta_keywords': Palavras-chave meta da página.
+                 - 'h1_tags': Lista de títulos de nível H1.
+                 - 'h2_tags': Lista de títulos de nível H2.
+                 - 'p_tags': Lista de parágrafos da página.
+                 - 'images': Lista de imagens com atributos 'alt' e 'src'.
+                 - 'favicon': URL do favicon da página.
+    url (str): A URL da página, usada para criar o nome do arquivo Markdown.
+
+    Retorna:
+    str: O conteúdo gerado em formato Markdown.
+
+    Exceções:
+    Nenhuma exceção explícita é levantada, mas pode haver falha ao salvar o arquivo se houver problemas 
+    com o diretório de destino ou permissões de escrita.
+
+    Exemplos:
+    ```python
+    markdown_content = await to_markdown(data, 'https://example.com')
+    ```
+
+    Logs:
+    A função imprime "Scraping concluído com sucesso!" ao concluir a conversão para Markdown e salvar o arquivo.
     """
     markdown = ""
 
@@ -244,23 +388,57 @@ def to_markdown(data: dict) -> str:
     if 'favicon' in data:
         markdown += f"**Favicon**: ![{data['favicon']}]({data['favicon']})\n\n"
 
+    # Salvar em um arquivo
+    async with aiofiles.open(f"{SCRAPS}/markdowns/{url.replace('/', '').replace('https:', '')}.md", "w", encoding="utf-8") as arquivo:
+        await arquivo.write(markdown)
+        print("Scraping concluído com sucesso!")
+
     return markdown
 
-def HandlerDinamic(url: str, prompt: str = PROMPT) -> dict | None:
+async def HandlerDinamic(url: str, prompt: str = PROMPT, source:str = None) -> dict | None:
     """
-    Realiza scraping dinâmico utilizando Selenium e converte o resultado.
+    Processa o conteúdo HTML de uma página ou fonte fornecida e envia para um modelo de IA para análise.
 
-    Args:
-        url (str): URL da página a ser processada.
-        prompt (str): Prompt para o modelo de processamento de linguagem.
+    A função busca o conteúdo HTML de uma página da web ou usa uma fonte HTML fornecida e, em seguida,
+    envia os dados para um modelo de IA para processamento. Caso o processamento seja bem-sucedido, 
+    os resultados são retornados em formato de dicionário. Se ocorrer algum erro durante a comunicação 
+    com o modelo ou ao processar o HTML, a função registra o erro nos logs e retorna `None`.
 
-    Returns:
-        dict: Resultado do scraping processado.
+    Parâmetros:
+    url (str): A URL da página da web a ser processada. Necessário caso `source` não seja fornecido.
+    prompt (str, opcional): O prompt que será usado ao interagir com o modelo de IA. O valor padrão é definido por `PROMPT`.
+    source (str, opcional): Uma string contendo o código HTML a ser processado. Se não fornecido, o conteúdo será recuperado da URL.
+
+    Retorna:
+    dict ou None: O resultado do modelo em formato de dicionário se o processamento for bem-sucedido; 
+                   caso contrário, `None`.
+
+    Exceções:
+    Nenhuma exceção explícita é levantada, mas erros de comunicação com o modelo ou processamento do HTML
+    são registrados nos logs.
+
+    Exemplo:
+    ```python
+    result = await HandlerDinamic('https://example.com')
+    result = await HandlerDinamic('https://example.com', source='<html><body><p>Conteúdo</p></body></html>')
+    ```
+
+    Logs:
+    A função registra erros no log caso ocorra falha na comunicação com o modelo ou no processamento do HTML.
     """
-    html = getSource(url)
+    if source:
+        html = source
+    else:
+        html = getSource(url)
 
     if html:
         data = parseHTML(html)
-        markdown = to_markdown(data)
-        return make_request_to_model(markdown)
+        
+        result = await make_request_to_model(data)
+
+        if result:
+            return result
+        else:
+            logging.error("Erro na comunicação com o modelo.")
+            return None
     return None
