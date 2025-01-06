@@ -7,7 +7,6 @@ from src.Scrapping.DinamicScrapper import HandlerDinamic, StaticScrapper, getSou
 from src.Utils.http_utils import validar_resposta
 from src.Utils.imports import FRONT
 import logging
-import asyncio
 
 # Inicialização da aplicação FastAPI
 app = FastAPI(
