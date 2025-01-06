@@ -110,7 +110,7 @@ def generate_markdown_content(url:str, output_widget3:tk.Text = None) -> None:
         None
     """
     try:
-        result = asyncio.run(CrawlScrapper(source=source))
+        result = asyncio.run(CrawlScrapper(source=url))
         if output_widget3:
             output_widget3.after(0, lambda: update_text_widget(output_widget3, result))
     except Exception as e:
