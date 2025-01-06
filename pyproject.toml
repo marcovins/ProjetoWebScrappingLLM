@@ -21,6 +21,7 @@ aiofiles = "^24.1.0"
 httpx = "^0.28.1"
 pytest-asyncio = "^0.25.0"
 regex = "^2024.11.6"
+transformers = "^4.47.1"
 
 [build-system]
 requires = ["poetry-core"]
