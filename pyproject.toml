@@ -10,7 +10,6 @@ packages = [{ include = "src" }]
 python = ">=3.9"
 python-dotenv = "^1.0.1"
 selenium = "^4.27.1"
-asyncio = "^3.4.3"
 pytest = "^8.3.4"
 fastapi = "^0.115.6"
 uvicorn = "^0.32.1"
