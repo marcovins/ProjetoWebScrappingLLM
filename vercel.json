@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "Utils/app.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "Utils/app.py"
+      }
+    ],
+    "env": {
+      "POETRY_CACHE_DIR": "/tmp/poetry_cache",
+      "PYTHONUNBUFFERED": "1"
+    },
+    "buildCommand": "poetry install --no-dev"
+  }
