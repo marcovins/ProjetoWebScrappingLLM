@@ -1,4 +1,3 @@
-import asyncio
 import aiofiles
 from bs4 import BeautifulSoup
 from src.Schemas.ResponseSchema import ResponseSchema

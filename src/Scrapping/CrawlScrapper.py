@@ -1,4 +1,3 @@
-import asyncio
 from crawl4ai import AsyncWebCrawler
 from src.Scrapping.DinamicScrapper import getSource, to_markdown, parseHTML, HandlerDinamic
 import logging

@@ -1,4 +1,3 @@
-import asyncio
 from src.Utils.IU import tk
 from scrapegraphai.graphs import SmartScraperGraph
 from src.Schemas.ResponseSchema import ResponseSchema
@@ -97,7 +96,7 @@ def run_dynamic_scraper(url: str, on_complete, output_widget2:tk.Text = None) ->
     finally:
         on_complete()
 
-def generate_markdown_content(url:str, output_widget3:tk.Text = None) -> None:
+async def generate_markdown_content(url:str, output_widget3:tk.Text = None) -> None:
     """
     Gera o conteúdo Markdown de uma URL utilizando o scraper dinâmico.
     Exibe no Widget da interface o resultado do markdown.
@@ -110,7 +109,7 @@ def generate_markdown_content(url:str, output_widget3:tk.Text = None) -> None:
         None
     """
     try:
-        result = asyncio.run(CrawlScrapper(source=url))
+        result = await CrawlScrapper(source=url)
         if output_widget3:
             output_widget3.after(0, lambda: update_text_widget(output_widget3, result))
     except Exception as e:

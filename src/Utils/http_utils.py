@@ -1,4 +1,3 @@
-import aiofiles
 from src.Utils.imports import SCRAPS, logging, MODEL_URL_REQUEST, PROMPT, schema, COOKIES, os
 from src.Utils.json_utils import limpar_json
 import requests
