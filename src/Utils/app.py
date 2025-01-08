@@ -3,8 +3,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, HttpUrl
 from src.Scrapping.CrawlScrapper import CrawlScrapper
-from src.Scrapping.DinamicScrapper import HandlerDinamic, StaticScrapper, getSource, to_markdown
-from src.Utils.http_utils import validar_resposta
+from src.Scrapping.DinamicScrapper import HandlerDinamic
 from src.Utils.imports import FRONT
 import logging
 
@@ -92,24 +91,20 @@ async def scrape_dynamic(input: URLInput):
 
     """
     try:
-
-        logging.info("Iniciando scraping dinâmico para URL: %s", input.url)
+        
+        logging.info("Iniciando scraping dinâmico para URL: %s", "input.url")
         result = await HandlerDinamic(str(input.url))
         if result:
             return result
         
-        logging.warning("Resultado vazio para scraping dinâmico, tentando scraping estático.")
-        result = await StaticScrapper(str(input.url))
-        if result:
-            return result
-
-        logging.warning("Scraping estático falhou, tentando CrawlScrapper.")
+        logging.warning("Scraping dinâmico falhou, tentando CrawlScrapper.")
         result = await CrawlScrapper(str(input.url))
         if result:
             return result
                
         logging.error("Nenhuma abordagem de scraping retornou resultado válido.")
         raise HTTPException(status_code=500, detail="Erro ao realizar scraping")
+        
     except Exception as e:
         logging.exception("Erro inesperado ao realizar scraping para a URL: %s", input.url)
         raise HTTPException(status_code=500, detail=f"Erro ao realizar scraping: {str(e)}")

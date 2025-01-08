@@ -1,9 +1,7 @@
 import aiofiles
 from bs4 import BeautifulSoup
-from src.Schemas.ResponseSchema import ResponseSchema
 from src.Utils.http_utils import make_request_to_model, exist_cookies, contains_cookie_terms
-from scrapegraphai.graphs import SmartScraperGraph
-from src.Utils.imports import PROMPT, GRAPH_CONFIG, COOKIES, SCRAPS
+from src.Utils.imports import PROMPT, COOKIES, SCRAPS
 from src.Utils.driver_utils import setup_driver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,56 +10,6 @@ import logging, json, re, time, os
 
 from src.Utils.json_utils import limpar_json
 
-async def StaticScrapper(url: str) -> dict | None:
-    """
-    Realiza scraping estático de uma URL utilizando a biblioteca SmartScraperGraph, extraindo dados estruturados 
-    de uma página da web com base no esquema de resposta configurado.
-
-    A função utiliza o SmartScraperGraph para realizar scraping de forma eficiente e extrair dados específicos 
-    da URL fornecida. A extração é baseada no prompt e na configuração previamente definidos.
-
-    Parâmetros:
-    url (str): A URL da página da web que será processada.
-
-    Retorna:
-    dict: Um dicionário contendo os dados extraídos da URL, de acordo com o esquema de resposta configurado,
-          ou None caso ocorra um erro durante o processo de scraping.
-
-    Exceções:
-    Caso ocorra qualquer erro durante a execução da função (por exemplo, erro na comunicação com o SmartScraperGraph),
-    a função captura a exceção, registra um erro no log, e retorna None.
-
-    Exemplo de uso:
-    ```python
-    result = await StaticScrapper("https://example.com")
-    if result:
-        print(result)
-    else:
-        print("Erro ao realizar o scraping estático.")
-    ```
-
-    Observações:
-    - A função faz uso da classe `SmartScraperGraph`, que requer a configuração prévia de um `prompt`, `source`, `config`, 
-      e `schema` para realizar o scraping e a extração dos dados de forma eficaz.
-    - O parâmetro `PROMPT` e a configuração `GRAPH_CONFIG` devem estar definidos e configurados corretamente para que a extração
-      ocorra conforme esperado.
-    - A função é assíncrona e deve ser chamada dentro de um contexto de execução assíncrona.
-
-    Logs:
-    - Caso ocorra um erro no processo de scraping, a função registra uma mensagem de erro no log.
-    """
-
-    try:
-        smart_scraper_graph = SmartScraperGraph(
-            prompt=PROMPT,
-            source=url,
-            config=GRAPH_CONFIG,
-            schema=ResponseSchema
-        )
-        return await smart_scraper_graph.run()
-    except Exception as e:
-        logging.error("Erro no scraper estático: %s", str(e))
-        return None
 
 def getSource(url: str) -> str:
     """
@@ -394,7 +342,7 @@ async def to_markdown(data: dict, url:str) -> str:
 
     return markdown
 
-async def HandlerDinamic(url: str, prompt: str = PROMPT, source:str = None) -> dict | None:
+async def HandlerDinamic(url: str, prompt: str = PROMPT, source:str = None) -> dict:
     """
     Processa o conteúdo HTML de uma página ou fonte fornecida e envia para um modelo de IA para análise.
 

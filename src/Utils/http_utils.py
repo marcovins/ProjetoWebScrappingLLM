@@ -1,5 +1,4 @@
-from src.Utils.imports import SCRAPS, logging, MODEL_URL_REQUEST, PROMPT, schema, COOKIES, os
-from src.Utils.json_utils import limpar_json
+from src.Utils.imports import SCRAPS, logging, MODEL_URL_REQUEST, PROMPT, COOKIES, os
 import requests
 
 async def make_request_to_model(data, promptOpcional: str = None):
@@ -137,15 +136,3 @@ def contains_cookie_terms(text):
     """
     cookie_terms = ['cookie', 'aceitar', 'consentimento', 'política de privacidade', 'cookies']
     return any(term.lower() in text.lower() for term in cookie_terms)
-
-def validar_resposta(result:str, url:str, metodo:str) -> dict | None:
-    if result:
-            cleaned_result = result
-            if cleaned_result:
-                with open(f"{SCRAPS}/json/{url.replace('/', '').replace('https:', '')}.json", "w", encoding="utf-8") as arquivo:
-                    arquivo.write(cleaned_result)
-                    print("Scraping concluído com sucesso!")
-                return {"url": url, "result": cleaned_result, "Método utilizado:": metodo}
-
-    else:
-        return None

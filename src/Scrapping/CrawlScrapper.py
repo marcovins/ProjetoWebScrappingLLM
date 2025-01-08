@@ -5,7 +5,7 @@ import aiofiles
 from src.Utils.imports import SCRAPS
 import re
 
-async def CrawlScrapper(source: str, verbose: bool = False, timeout: int = 30 , markdown:bool = False) -> dict | None:
+async def CrawlScrapper(source: str, verbose: bool = False, timeout: int = 30 , markdown:bool = False) -> dict:
     """
     Realiza o scraping dinâmico de uma página da web usando a biblioteca AsyncWebCrawler do crawl4ai.
 
@@ -73,7 +73,7 @@ async def CrawlScrapper(source: str, verbose: bool = False, timeout: int = 30 , 
                 sleep_on_close= True,
 
             )
-            print(f"Result com o crawlscrapper {result.cleaned_html}")
+            
             if result:
                 if markdown:
                     # Conteúdo da variável
@@ -116,7 +116,7 @@ async def CrawlScrapper(source: str, verbose: bool = False, timeout: int = 30 , 
         logging.error(f"[Exceção] Um erro ocorreu durante o scraping de {source}. Detalhes: {e}")
         return None
     
-async def dinamicMarkdown(url:str, source:str = None) -> str | None:
+async def dinamicMarkdown(url:str, source:str = None) -> str:
     """
     Converte o conteúdo de uma página da web ou uma fonte fornecida para o formato Markdown.
 
