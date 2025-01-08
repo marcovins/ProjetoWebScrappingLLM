@@ -14,21 +14,22 @@
 
         /* Estilos gerais do corpo */
         body {
-            font-family: 'Playfair Display', serif;
-            background-image: url('https://wallpaperaccess.com/full/1614781.jpg');
-            background-size: cover; /* A imagem cobre toda a área da página */
-            background-position: center center; /* Alinha a imagem no centro da página */
-            background-attachment: fixed; /* A imagem não rola com a página */
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            margin-top: 20px;
+        font-family: 'Playfair Display', serif;
+        background-image: url('https://wallpaperaccess.com/full/1614781.jpg');
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        line-height: 1.6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-height: 100vh;
+        height: auto;
+        margin-top: 20px;
         }
 
         /* Título principal */
@@ -394,6 +395,11 @@
             }
         }
 
+        // Função de rolagem suave para o elemento alvo
+        function scrollToElement(element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
         document.querySelectorAll(".collapsible").forEach(button => {
             button.addEventListener("click", () => {
                 button.classList.toggle("active");
@@ -402,6 +408,7 @@
                     content.style.maxHeight = null;
                 } else {
                     content.style.maxHeight = content.scrollHeight + "px";
+                    scrollToElement(button);  // Rolar até o botão
                 }
             });
         });
